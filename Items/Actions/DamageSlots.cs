@@ -7,11 +7,10 @@ using MiscellaneousJSON.Helpers;
 using InscryptionAPI.Card;
 
 namespace MiscellaneousJSON.Items.Actions;
-public class DamageSlots : ConsumableItem
+public class DamageSlots : ActionBase
 {
-
-    public override IEnumerator ActivateSequence()
+    public override IEnumerator Trigger()
     {
-        yield break;
+        throw new NotImplementedException();
     }
 }

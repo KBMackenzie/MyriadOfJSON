@@ -12,33 +12,23 @@ namespace MiscellaneousJSON.Items;
 public class ItemJSON
 {
     public string? prefix { get; set; }
+    
+    public string? name { get; set; }
     public string? description { get; set; }
+    public string? rulebookTexture { get; set; }
 
     public int? powerLevel { get; set; }
     public bool? notRandomlyGiven { get; set; }
 
-    public string? rulebookName { get; set; }
-    public string? rulebookDescription { get; set; }
-    public string? rulebookSprite { get; set; }
-
-    /*internal ConsumableItemData GetData()
-        => new()
-        {
-            description = description ?? string.Empty,
-            powerLevel = powerLevel ?? 0,
-
-            rulebookName = rulebookName ?? string.Empty,
-            rulebookDescription = rulebookDescription ?? string.Empty,
-            rulebookSprite = AssetHelpers.MakeSprite(rulebookSprite),
-        };*/
-
     internal void CreateItem()
         => ConsumableItemManager.New(
                 prefix,
-                rulebookName ?? string.Empty,
-                rulebookDescription ?? string.Empty,
-                AssetHelpers.MakeTexture(rulebookSprite),
+                name ?? string.Empty,
+                description ?? string.Empty,
+                AssetHelpers.MakeTexture(rulebookTexture),
                 typeof(DummyItem),
                 ConsumableItemManager.ModelType.BasicRune
-            ).SetAct1();
+            ).SetPowerLevel(powerLevel ?? 0)
+            .SetNotRandomlyGiven(notRandomlyGiven ?? false)
+            .SetAct1();
 }

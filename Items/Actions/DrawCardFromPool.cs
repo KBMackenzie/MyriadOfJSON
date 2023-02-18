@@ -21,7 +21,7 @@ public class DrawCardFromPool : ActionBase
         CardPool = CardManager.AllCardsCopy.Where(Predicate).ToList(); 
     }
     
-    public override IEnumerator TriggerItem()
+    public override IEnumerator Trigger()
     {
         if (CardPool == null) yield break;
         CardAmount ??= 1;

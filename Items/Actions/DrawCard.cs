@@ -11,7 +11,7 @@ public class DrawCard : ActionBase
 {
    List<string>? CardsToDraw { get; set; }
 
-   public override IEnumerator TriggerItem()
+   public override IEnumerator Trigger()
    {
         if (CardsToDraw == null) yield break;
         foreach (string? cardName in CardsToDraw)

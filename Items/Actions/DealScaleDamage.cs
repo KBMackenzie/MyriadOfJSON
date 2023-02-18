@@ -11,7 +11,7 @@ public class DealScaleDamage : ActionBase
 {
     public string? DamageAmount { get; set; }
 
-    public override IEnumerator TriggerItem()
+    public override IEnumerator Trigger()
     {
         int? damage = int.TryParse(DamageAmount, out int n) ? n : null;
         if (damage == null) yield break;

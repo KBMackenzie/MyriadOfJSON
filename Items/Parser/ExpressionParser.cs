@@ -50,7 +50,7 @@ public static class ExpressionHandler
         return result is bool b && b;
     }
 
-    public static int? SafelyCastInt(Expression? expression)
+    public static int? SafelyParseAsInt(Expression? expression)
     {
         object? result;
         try
@@ -60,12 +60,12 @@ public static class ExpressionHandler
         catch (Exception)
         {
             Plugin.LogError($"Invalid expression: {expression?.Error ?? "(null)"}");
-            return null; // Default to 'true'.
+            return null;
         }
 
         if (result == null || result is not int)
         {
-            Plugin.LogError($"Invalid expression: Expression doesn't evaluate to integer!");
+            Plugin.LogError($"Invalid expression: Expression doesn't evaluate to an integer!");
             return null;
         }
 

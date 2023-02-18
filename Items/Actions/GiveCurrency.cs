@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using DiskCardGame;
 using MiscellaneousJSON.Helpers;
 using UnityEngine;
+using NCalc;
+using MiscellaneousJSON.Items.Parser;
+
+#pragma warning disable Publicizer001
 
 namespace MiscellaneousJSON.Items.Actions;
 public class GiveCurrency : ActionBase
@@ -15,12 +19,16 @@ public class GiveCurrency : ActionBase
     
     private int? ParseCurrency(string? x)
     {
-        if (!int.TryParse(x, out int n)
-            || n < 0) return null;
-        return n;
+        // TODO: Evaluate expression here instead! 
+        /* if (!int.TryParse(x, out int n) || n < 0) return null; */
+
+        Expression exp = new Expression(x);
+        // Add parameters.
+        // TODO
+        return ExpressionHandler.SafelyParseAsInt(exp);
     } 
 
-    public override IEnumerator TriggerItem()
+    public override IEnumerator Trigger()
     {
         int? addBones = ParseCurrency(Bones);
         if (addBones != null)
