@@ -7,6 +7,7 @@ using MiscellaneousJSON.Helpers;
 using InscryptionAPI.Card;
 
 namespace MiscellaneousJSON.Items.Actions;
+
 public class DamageSlots : ActionBase
 {
     public override IEnumerator Trigger()

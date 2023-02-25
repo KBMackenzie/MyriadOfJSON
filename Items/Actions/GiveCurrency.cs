@@ -6,7 +6,7 @@ using DiskCardGame;
 using MiscellaneousJSON.Helpers;
 using UnityEngine;
 using NCalc;
-using MiscellaneousJSON.Items.Parser;
+using MiscellaneousJSON.Parser;
 
 #pragma warning disable Publicizer001
 

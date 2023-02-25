@@ -7,6 +7,7 @@ using MiscellaneousJSON.Helpers;
 using UnityEngine;
 
 namespace MiscellaneousJSON.Items.Actions;
+
 public class DrawCard : ActionBase
 {
    List<string>? CardsToDraw { get; set; }

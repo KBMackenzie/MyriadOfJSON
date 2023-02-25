@@ -1,18 +1,46 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using MiscellaneousJSON.Helpers;
 using UnityEngine;
 using DiskCardGame;
 using NCalc;
 
-namespace MiscellaneousJSON.Items.Parser;
+namespace MiscellaneousJSON.Parser;
+
 public static class ExpressionHandler
 {
     public static Expression? CardPredicate(string? str, CardInfo card)
     {
         if (str == null || str.IsWhiteSpace()) return null;
+
+        /*
+        // Stringify lists for usage (add support for user-made ones later. :>) 
+        // I can do so by replacing the .ToString() with another method.
+        // That method should look for the actual ability/trait/tribe name and return that!
+        string tribeList = card.tribes.Select(x => x.ToString()).StringifyList();
+        string traitList = card.traits.Select(x => x.ToString()).StringifyList();
+        string gemCostList = card.GemsCost.Select(x => x.ToString()).StringifyList();
+        string abilityList = card.Abilities.Select(x => x.ToString()).StringifyList();
+        string specialAbilities = card.SpecialAbilities.Select(x => x.ToString()).StringifyList();
+
+        // Actually replace things in the string before making the expression!
+        str = str.Replace("[Tribes]", tribeList)
+            .Replace("[Traits]", traitList)
+            .Replace("[GemsCost]", gemCostList)
+            .Replace("[Abilities]", abilityList)
+            .Replace("[SpecialAbilities]", specialAbilities);
+        */
+
+        // Add all list params!
+        str = str.ReplaceListParameter("[Tribes]", card.tribes)
+            .ReplaceListParameter("[Traits]", card.traits)
+            .ReplaceListParameter("[GemCost]", card.GemsCost)
+            .ReplaceListParameter("[Abilities]", card.Abilities)
+            .ReplaceListParameter("[SpecialAbilities]", card.SpecialAbilities)
+            .ReplaceListParameter("[MetaCategories]", card.metaCategories);
+
+        Plugin.LogInfo($"Final string: {str}");
 
         // Expression is a predicate to filter the cards with.
         Expression pred = new Expression(str);
@@ -20,16 +48,9 @@ public static class ExpressionHandler
         // Parameters!
         // 1. Costs
         pred.Parameters["BloodCost"] = card.BloodCost;
-        pred.Parameters["BonesCost"] = card.BonesCost;
+        pred.Parameters["BoneCost"] = card.BonesCost;
         pred.Parameters["EnergyCost"] = card.EnergyCost;
-        pred.Parameters["GemsCost"] = card.GemsCost.Select(x => x.ToString()); // IEnumerable<string> !! 
-        // 2. Temple, Tribes, Traits
         pred.Parameters["Temple"] = card.temple.ToString();
-        pred.Parameters["Tribes"] = card.tribes.Select(x => x.ToString());
-        pred.Parameters["Traits"] = card.traits.Select(x => x.ToString());
-        // 3. Abilities, Special Abilities
-        pred.Parameters["Abilities"] = card.Abilities.Select(x => x.ToString());
-        pred.Parameters["SpecialAbilities"] = card.SpecialAbilities.Select(x => x.ToString());
 
         return pred;
     }

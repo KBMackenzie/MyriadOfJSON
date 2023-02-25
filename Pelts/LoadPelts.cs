@@ -18,7 +18,7 @@ internal static class LoadPelts
         PeltData? data = JsonConvert.DeserializeObject<PeltData>(File.ReadAllText(filePath));
         if(data == null )
         {
-            Plugin.LogError("");
+            Plugin.LogError($"Couldn't load JSON data from file \'{Path.GetFileName(filePath)}\'!");
             return;
         }
         data.MakePelt();

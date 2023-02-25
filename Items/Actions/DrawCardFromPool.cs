@@ -9,6 +9,7 @@ using InscryptionAPI.Card;
 using Random = UnityEngine.Random;
 
 namespace MiscellaneousJSON.Items.Actions;
+
 public class DrawCardFromPool : ActionBase
 {
     public List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!

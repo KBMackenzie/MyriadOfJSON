@@ -1,21 +1,17 @@
-using System;
-using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
 using UnityEngine;
 
 namespace MiscellaneousJSON.Items.Actions;
+
 public class DealScaleDamage : ActionBase
 {
-    public string? DamageAmount { get; set; }
+    public int? DamageAmount { get; set; }
 
     public override IEnumerator Trigger()
     {
-        int? damage = int.TryParse(DamageAmount, out int n) ? n : null;
-        if (damage == null) yield break;
-        
+        int? damage = DamageAmount;
+
         if (damage > 0)
         {
             yield return Singleton<LifeManager>.Instance.ShowDamageSequence(

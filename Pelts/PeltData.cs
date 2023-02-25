@@ -15,6 +15,11 @@ public class PeltData
 
     public string? condition { get; set; }
 
+    // Additional parameters to make a modder's life easier:
+    public bool? allowRareCards { get; set; }
+    public bool? allowGiantCards { get; set; }
+    public bool? onlyAllowTraderChoice { get; set; }
+
     // Implicitly adds "Trait.Pelt" and "SpecialTriggeredAbility.SpawnLice".
     public void MakePelt()
     {
@@ -31,7 +36,7 @@ public class PeltData
             baseBuyPrice: basePrice ?? 2,
             extraAbilitiesToAdd: extraAbilitiesToAdd ?? 0,
             choicesOfferedByTrader: choicesOfferedByTrader ?? 8,
-            getCardChoices: () => PeltParser.ParseCardChoices(condition ?? "true")
+            getCardChoices: () => PeltParser.ParseCardChoices(this)
         );
     }
 }

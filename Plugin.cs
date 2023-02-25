@@ -1,11 +1,14 @@
 using BepInEx;
 using HarmonyLib;
+using MiscellaneousJSON.Pelts;
+using MiscellaneousJSON.Masks;
 
 namespace MiscellaneousJSON;
 
 // Plugin base:
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 [BepInDependency("cyantist.inscryption.api", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("MADH.inscryption.JSONLoader", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {   
     public const string PluginGuid = "kel.inscryption.miscjson";
@@ -13,13 +16,16 @@ public class Plugin : BaseUnityPlugin
     public const string PluginVersion = "1.0.0";
     
     internal static Plugin? Instance; // Log source.
-
+    
     private void Awake()
     {
         Instance = this; // Make log source.
 
         Harmony harmony = new Harmony("kel.harmony.miscjson");
         harmony.PatchAll();
+
+        LoadPelts.LoadAll();
+        LoadMasks.LoadAll();
     }
 
     internal static void LogInfo(string message) => Instance?.Logger.LogInfo(message);

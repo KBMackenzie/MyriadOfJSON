@@ -9,9 +9,10 @@ using UnityEngine;
 using MiscellaneousJSON.Items.Actions;
 using HarmonyLib;
 using NCalc;
-using MiscellaneousJSON.Items.Parser;
+using MiscellaneousJSON.Parser;
 
 namespace MiscellaneousJSON.Items;
+
 public class DummyItem : ConsumableItem
 {
     public static Dictionary<string, ActionList> ItemActions = new();
@@ -46,12 +47,13 @@ public class DummyItem : ConsumableItem
 
         string prefabId = __instance.Data.PrefabId;
 
-        var itemAction = ItemActions
+        object? itemAction = ItemActions
             .Where(x => prefabId.EndsWith(x.Key))
             .FirstOrDefault();
 
-        if (itemAction.Value == null) yield break;
-        ActionList x = itemAction.Value;
+        if (itemAction == null) yield break;
+
+        ActionList x = ((KeyValuePair<string, ActionList>)itemAction).Value;
 
         foreach (ActionBase action in x.Actions)
         {
