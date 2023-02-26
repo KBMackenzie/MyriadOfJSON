@@ -366,6 +366,10 @@ foo/
 obj/
 bin/
 
-TODO.txt
+*.txt
 .vs/
 .git/
+*_pelt.json
+*_mask.json
+*.swp
+*.swo

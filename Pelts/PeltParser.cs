@@ -19,9 +19,13 @@ internal static class PeltParser
             // A lot to unpack here, uhm, here we go. :'3
             string exp = data.condition ?? "true";
 
+            if ((data.onlyAllowTraderChoice ?? true)
+                && !x.HasCardMetaCategory(CardMetaCategory.TraderOffer)
+            ) return false;
+
             if (!(data.allowGiantCards ?? false) && (
-                    x.HasTrait(Trait.Giant)
-                    || x.HasSpecialAbility(SpecialTriggeredAbility.GiantCard)
+                x.HasTrait(Trait.Giant)
+                || x.HasSpecialAbility(SpecialTriggeredAbility.GiantCard)
             )) return false;
 
             if (!(data.allowRareCards ?? false)
