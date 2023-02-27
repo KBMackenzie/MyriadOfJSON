@@ -2,6 +2,10 @@ using BepInEx;
 using HarmonyLib;
 using MiscellaneousJSON.Pelts;
 using MiscellaneousJSON.Masks;
+using InscryptionAPI;
+using InscryptionAPI.Card;
+using InscryptionAPI.Helpers;
+using DiskCardGame;
 
 namespace MiscellaneousJSON;
 

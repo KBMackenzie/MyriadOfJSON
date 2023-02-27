@@ -1,78 +1,55 @@
-﻿using System;
+using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using MiscellaneousJSON.Helpers;
-using UnityEngine;
 using DiskCardGame;
-using NCalc;
 
-namespace MiscellaneousJSON.Parser;
-
-public static class ExpressionHandler
+public static class ExpressionParser
 {
-    public static Expression? CardPredicate(string? str, CardInfo card)
+    public static string[][] MatchGroups(Regex reg, string str)
+       => reg.Matches(str).Cast<Match>().Select(GetGroups).ToArray();
+
+    public static string[] FirstMatch(Regex reg, string str)
+        => MatchGroups(reg, str)[0];
+
+    public static string[] GetGroups(Match match)
+        => match.Groups.Cast<Group>().Select(x => x.Value).ToArray();
+
+    public class ParserBlock
     {
-        if (str == null || str.IsWhiteSpace()) return null;
+        public CardInfo Card;
+        public Regex Regex;
+        public string Expression;
+        public Func<CardInfo, string, bool> Evaluate;
 
-        // Add all list params!
-        str = str.ReplaceListParameter(ParamNames.Tribes, card.tribes)
-            .ReplaceListParameter(ParamNames.Traits, card.traits)
-            .ReplaceListParameter(ParamNames.GemsCost, card.GemsCost)
-            .ReplaceListParameter(ParamNames.Abilities, card.Abilities)
-            .ReplaceListParameter(ParamNames.SpecialAbilities, card.SpecialAbilities)
-            .ReplaceListParameter(ParamNames.MetaCategories, card.metaCategories);
+        public ParserBlock(CardInfo card, Regex regex, string expression,
+                Func<CardInfo, string, bool> evaluate)
+        {
+            Card = card;
+            Regex = regex;
+            Expression = expression;
+            Evaluate = evaluate;
+        }
 
-        Plugin.LogInfo($"Final string: {str}");
+        public bool EvaluateFunc()
+            => Evaluate(Card, Expression);
 
-        // Expression is a predicate to filter the cards with.
-        Expression pred = new Expression(str);
+        public string EvaluateAsString()
+            => EvaluateFunc() ? "'true'" : "'false'";
 
-        // Additional params!
-        pred.Parameters[ParamNames.BloodCost] = card.BloodCost;
-        pred.Parameters[ParamNames.BoneCost] = card.BonesCost;
-        pred.Parameters[ParamNames.EnergyCost] = card.EnergyCost;
-        pred.Parameters[ParamNames.Temple] = card.temple.ToString();
-
-        return pred;
+        public ParserBlock NewFromExpression(string newExp)
+            => new(Card, Regex, newExp, Evaluate);
     }
 
-    public static bool SafeEvaluation(Expression? predicate)
+    // This should be done in an ability by ability basis
+    public static string ParseFunction(ParserBlock info)
     {
-        object? result;
-        try
-        {
-            result = predicate?.Evaluate();
-        }
-        catch (Exception e)
-        {
-            Plugin.LogError($"Invalid expression: {predicate?.ToString() ?? "(null)"}");
-            Plugin.LogError(e.Message);
-            return true; // Default to 'true'.
-        }
-
-        return result is bool b && b;
-    }
-
-    public static int? SafelyParseAsInt(Expression? expression)
-    {
-        object? result;
-        try
-        {
-            result = expression?.Evaluate();
-        }
-        catch (Exception e)
-        {
-            Plugin.LogError($"Invalid expression: {expression?.ToString() ?? "(null)"}");
-            Plugin.LogError(e.Message);
-            return null;
-        }
-
-        if (result == null || result is not int)
-        {
-            Plugin.LogError($"Invalid expression: Expression doesn't evaluate to an integer!");
-            return null;
-        }
-
-        return (int) result;
+        if (!info.Regex.IsMatch(info.Expression)) return info.Expression;
+        string[] groups = FirstMatch(info.Regex, info.Expression);
+        string replace = info.EvaluateAsString(); 
+        // Create new parser block with a new expression!
+        // (Everything else remains the same.)
+        ParserBlock newInfo = info.NewFromExpression(groups[1]);
+        return ParseFunction(newInfo) + replace + groups[4];
     }
 }
