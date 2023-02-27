@@ -17,13 +17,13 @@ public static class ExpressionParser
     public static string[] GetGroups(Match match)
         => match.Groups.Cast<Group>().Select(x => x.Value).ToArray();
 
-    // This should be done in an ability by ability basis
-    public static string ParseFunction(CardInfo card, string exp)
+    // Parses all functions in an expression
+    public static string ParseFunctions(CardInfo card, string exp)
     {
         Regex reg = FunctionInterpreter.FunctionRegex;
         if (!reg.IsMatch(exp)) return exp; 
         string[] groups = FirstMatch(reg, exp);
         string replace = ""; // EvaluateFunction(group[3], group[4]); 
-        return ParseFunction(card, exp) + replace + groups[5];
+        return ParseFunctions(card, groups[1]) + replace + groups[5];
     }
 }
