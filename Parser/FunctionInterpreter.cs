@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using DiskCardGame;
 using System.Text;
 
+namespace MiscellaneousJSON.Parser;
+
 // Type alias
 using CardFunc = System.Func<DiskCardGame.CardInfo, string, bool>;
 

@@ -5,6 +5,8 @@ using InscryptionAPI.Guid;
 using InscryptionAPI.Card;
 using DiskCardGame;
 
+namespace MiscellaneousJSON.Parser;
+
 public static class ParserUtils
 {
     private static Ability GetAbility(string guid, string rulebookName)
