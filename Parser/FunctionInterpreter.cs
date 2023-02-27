@@ -26,8 +26,17 @@ public static class FunctionInterpreter
     public static readonly Regex FunctionRegex = new (
             @"^(.*)(("
             + ArrayAsString(FunctionNames)
-            + @")(\(.*\)))(.*)$"
+            + @")\((.*)\))(.*)$"
         ); 
+
+    /* FunctionRegex Capture Groups:
+     * [0] - full expression, ignore
+     * [1] - part before func
+     * [2] - full func body
+     * [3] - func name
+     * [4] - func params
+     * [5] - part after func
+     */
 
     private static string ArrayAsString(string[] arr)
     {

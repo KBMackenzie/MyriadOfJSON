@@ -13,9 +13,9 @@ public static class ParamNames
     public const string EnergyCost = "[EnergyCost]";
     public const string GemsCost = "[GemsCost]";
     public const string Temple = "[Temple]";
-    public const string Tribes = "[Tribes]";
-    public const string Abilities = "[Abilities]";
-    public const string SpecialAbilities = "[SpecialAbilities]";
-    public const string Traits = "[Traits]";
-    public const string MetaCategories = "[MetaCategories]";
+    // public const string Tribes = "[Tribes]";
+    // public const string Abilities = "[Abilities]";
+    // public const string SpecialAbilities = "[SpecialAbilities]";
+    // public const string Traits = "[Traits]";
+    // public const string MetaCategories = "[MetaCategories]";
 }

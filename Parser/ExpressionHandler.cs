@@ -14,6 +14,7 @@ public static class ExpressionHandler
     {
         if (str == null || str.IsWhiteSpace()) return null;
 
+        /*
         // Add all list params!
         str = str.ReplaceListParameter(ParamNames.Tribes, card.tribes)
             .ReplaceListParameter(ParamNames.Traits, card.traits)
@@ -23,6 +24,7 @@ public static class ExpressionHandler
             .ReplaceListParameter(ParamNames.MetaCategories, card.metaCategories);
 
         Plugin.LogInfo($"Final string: {str}");
+        */
 
         // Expression is a predicate to filter the cards with.
         Expression pred = new Expression(str);
