@@ -9,8 +9,14 @@ namespace MiscellaneousJSON.Parser;
 
 public static class ParserUtils
 {
-    private static Ability GetAbility(string guid, string rulebookName)
+    public static Tribe GetCustomTribe(string guid, string rulebookName)
+        => GuidManager.GetEnumValue<Tribe>(guid, rulebookName);
+
+    public static Ability GetCustomAbility(string guid, string rulebookName)
         => GuidManager.GetEnumValue<Ability>(guid, rulebookName);
+
+    public static SpecialTriggeredAbility GetCustomSpecialAbility(string guid, string rulebookName)
+        => GuidManager.GetEnumValue<SpecialTriggeredAbility>(guid, rulebookName);
 
     private static string? GetAbilityName(string abilityName)
     {
@@ -19,12 +25,4 @@ public static class ParserUtils
             .FirstOrDefault();  
         return x?.Info?.name;
     }
-
-    /*
-     * public static Ability GetCustomAbility(string GUID, string rulebookname)
-     * {
-     *     return InscryptionAPI.Guid.GuidManager.GetEnumValue<Ability>(GUID, rulebookname);
-     *
-     *     }
-     */
 }

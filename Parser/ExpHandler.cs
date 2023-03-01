@@ -1,32 +1,21 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using MiscellaneousJSON.Helpers;
-using UnityEngine;
-using DiskCardGame;
 using NCalc;
+using MiscellaneousJSON.Helpers;
+using DiskCardGame;
 
 namespace MiscellaneousJSON.Parser;
 
-public static class ExpressionHandler
+public static class ExpHandler
 {
     public static Expression? CardPredicate(string? str, CardInfo card)
     {
+        // Expression is a predicate to filter the cards with.
         if (str == null || str.IsWhiteSpace()) return null;
 
-        /*
-        // Add all list params!
-        str = str.ReplaceListParameter(ParamNames.Tribes, card.tribes)
-            .ReplaceListParameter(ParamNames.Traits, card.traits)
-            .ReplaceListParameter(ParamNames.GemsCost, card.GemsCost)
-            .ReplaceListParameter(ParamNames.Abilities, card.Abilities)
-            .ReplaceListParameter(ParamNames.SpecialAbilities, card.SpecialAbilities)
-            .ReplaceListParameter(ParamNames.MetaCategories, card.metaCategories);
+        // Parse all functions
+        str = FuncParser.ParseFunctions(card, str);
 
-        Plugin.LogInfo($"Final string: {str}");
-        */
-
-        // Expression is a predicate to filter the cards with.
+        // Create expression.
         Expression pred = new Expression(str);
 
         // Additional params!

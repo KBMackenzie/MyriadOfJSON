@@ -16,4 +16,12 @@ public static class StringExtensions
      * I'm defining my own becaue of nullability. */
     public static bool IsWhiteSpace(this string str)
         => str.Length == 0 || str.All(char.IsWhiteSpace);
+
+    public static string TrimSingleQuotes(this string str)
+    {
+        int start = 0, end = str.Length;
+        if (str.StartsWith("'")) start++;
+        if (str.EndsWith("'")) end--;
+        return str.Substring(start, end);
+    }
 }

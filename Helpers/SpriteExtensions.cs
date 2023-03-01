@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace MiscellaneousJSON.Helpers;
+
 internal static class SpriteExtensions
 {
     internal static Sprite PivotBottom(this Sprite sprite)

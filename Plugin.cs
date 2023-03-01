@@ -28,10 +28,18 @@ public class Plugin : BaseUnityPlugin
         Harmony harmony = new Harmony("kel.harmony.miscjson");
         harmony.PatchAll();
 
-        LoadPelts.LoadAll();
-        LoadMasks.LoadAll();
+        Dummy dummy = new(); 
+        System.Console.WriteLine($"Ability: {dummy.Ability}");
+        // LoadPelts.LoadAll();
+        // LoadMasks.LoadAll();
     }
 
     internal static void LogInfo(string message) => Instance?.Logger.LogInfo(message);
     internal static void LogError(string message) => Instance?.Logger.LogError(message);
+}
+
+public class Dummy : AbilityBehaviour
+{
+    private static Ability ability = AbilityManager.New(Plugin.PluginGuid, "dummy", "", typeof(Dummy), "").ability;
+    public override Ability Ability => ability; 
 }
