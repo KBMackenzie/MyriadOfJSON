@@ -9,14 +9,14 @@ namespace MiscellaneousJSON.Parser;
 
 public static class ParserUtils
 {
-    public static Tribe GetCustomTribe(string guid, string rulebookName)
-        => GuidManager.GetEnumValue<Tribe>(guid, rulebookName);
+    public static Tribe GetCustomTribe((string guid, string name) tribe)
+        => GuidManager.GetEnumValue<Tribe>(tribe.guid, tribe.name);
 
-    public static Ability GetCustomAbility(string guid, string rulebookName)
-        => GuidManager.GetEnumValue<Ability>(guid, rulebookName);
+    public static Ability GetCustomAbility((string guid, string name) ability) 
+        => GuidManager.GetEnumValue<Ability>(ability.guid, ability.name);
 
-    public static SpecialTriggeredAbility GetCustomSpecialAbility(string guid, string rulebookName)
-        => GuidManager.GetEnumValue<SpecialTriggeredAbility>(guid, rulebookName);
+    public static SpecialTriggeredAbility GetCustomSpecialAbility((string guid, string name) specialAbility)
+        => GuidManager.GetEnumValue<SpecialTriggeredAbility>(specialAbility.guid, specialAbility.name);
 
     private static string? GetAbilityName(string abilityName)
     {

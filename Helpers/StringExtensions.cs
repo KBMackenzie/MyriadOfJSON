@@ -2,6 +2,7 @@ using System.Linq;
 
 #nullable enable
 namespace MiscellaneousJSON.Helpers;
+
 public static class StringExtensions
 {
     public static string SentenceCase(this string key)
@@ -19,9 +20,16 @@ public static class StringExtensions
 
     public static string TrimSingleQuotes(this string str)
     {
-        int start = 0, end = str.Length;
-        if (str.StartsWith("'")) start++;
-        if (str.EndsWith("'")) end--;
-        return str.Substring(start, end);
+        if (str.StartsWith("'")) return TrimSingleQuotes(str.Substring(1));
+        if (str.EndsWith("'")) return TrimSingleQuotes(str.Remove(str.Length - 1));
+        return str;
+    }
+
+    public static (string, string) GetGuidAndName(this string str)
+    {
+        int index = str.IndexOf(' ');
+        string guid = str.Remove(index);
+        string itemName = str.Substring(index + 1);
+        return (guid, itemName);
     }
 }
