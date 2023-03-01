@@ -10,8 +10,6 @@ using CardFunc = System.Func<DiskCardGame.CardInfo, string, MiscellaneousJSON.Pa
 
 public static class FunctionLib
 {
-    public static Dictionary<string, CardFunc> Functions = new();
-    
     public static readonly string[] AllNames =
     {
         FunctionNames.HasTribe,
@@ -21,14 +19,15 @@ public static class FunctionLib
         FunctionNames.HasMetaCategory
     };
 
-    public static void PopulateFunctionDictionary()
+    public static Dictionary<string, CardFunc> Functions = new()
     {
-        Functions[FunctionNames.HasTribe] = HasTribe;
-        Functions[FunctionNames.HasTrait] = HasTrait;
-        Functions[FunctionNames.HasAbility] = HasAbility;
-        Functions[FunctionNames.HasSpecialAbility] = HasSpecialAbility;
-        Functions[FunctionNames.HasMetaCategory] = HasMetaCategory;
-    }
+        { FunctionNames.HasTribe, HasTribe },
+        { FunctionNames.HasTrait, HasTrait },
+        { FunctionNames.HasAbility, HasAbility },
+        { FunctionNames.HasSpecialAbility, HasSpecialAbility },
+        { FunctionNames.HasMetaCategory, HasMetaCategory },
+        { FunctionNames.HasAppearanceBehaviour, HasAppearance }
+    };
 
     public static NCalcBool HasTribe(CardInfo card, string tribeName)
     {
@@ -48,6 +47,10 @@ public static class FunctionLib
     public static NCalcBool HasMetaCategory(CardInfo card, string metaCategoryName)
         => EnumHelpers.TryParse(metaCategoryName, out CardMetaCategory c)
            && card.HasCardMetaCategory(c);
+
+    public static NCalcBool HasAppearance(CardInfo card, string appearanceName)
+        => EnumHelpers.TryParse(appearanceName, out CardAppearanceBehaviour.Appearance a)
+           && card.appearanceBehaviour.Contains(a);
 
     public static NCalcBool HasAbility(CardInfo card, string abilityName)
     {

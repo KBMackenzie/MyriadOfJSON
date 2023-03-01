@@ -25,7 +25,7 @@ public class GiveCurrency : ActionBase
         Expression exp = new Expression(x);
         // Add parameters.
         // TODO
-        return ExpressionHandler.SafelyParseAsInt(exp);
+        return ExpHandler.SafelyParseAsInt(exp);
     } 
 
     public override IEnumerator Trigger()
@@ -49,5 +49,4 @@ public class GiveCurrency : ActionBase
         }
 
         yield break;
-    }
-}
+    } }

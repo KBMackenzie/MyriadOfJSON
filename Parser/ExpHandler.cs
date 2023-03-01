@@ -15,14 +15,15 @@ public static class ExpHandler
         // Parse all functions
         str = FuncParser.ParseFunctions(card, str);
 
+        Plugin.LogInfo($"Parsed all functions: {str}");
         // Create expression.
         Expression pred = new Expression(str);
 
         // Additional params!
-        pred.Parameters[ParamNames.BloodCost] = card.BloodCost;
-        pred.Parameters[ParamNames.BoneCost] = card.BonesCost;
-        pred.Parameters[ParamNames.EnergyCost] = card.EnergyCost;
-        pred.Parameters[ParamNames.Temple] = card.temple.ToString();
+        pred.Parameters[VarNames.BloodCost] = card.BloodCost;
+        pred.Parameters[VarNames.BoneCost] = card.BonesCost;
+        pred.Parameters[VarNames.EnergyCost] = card.EnergyCost;
+        pred.Parameters[VarNames.Temple] = card.temple.ToString();
 
         return pred;
     }

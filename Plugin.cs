@@ -29,8 +29,12 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll();
 
         Dummy dummy = new(); 
-        System.Console.WriteLine($"Ability: {dummy.Ability}");
-        // LoadPelts.LoadAll();
+        CardLoader.GetCardByName("Kingfisher").AddAbilities(dummy.Ability);
+        CardLoader.GetCardByName("Bullfrog").AddAbilities(dummy.Ability);
+        CardLoader.GetCardByName("AntFlying").AddAbilities(dummy.Ability);
+        CardLoader.GetCardByName("DireWolf").AddAbilities(dummy.Ability);
+        // System.Console.WriteLine($"Ability: {dummy.Ability}");
+        LoadPelts.LoadAll();
         // LoadMasks.LoadAll();
     }
 
@@ -40,6 +44,6 @@ public class Plugin : BaseUnityPlugin
 
 public class Dummy : AbilityBehaviour
 {
-    private static Ability ability = AbilityManager.New(Plugin.PluginGuid, "dummy", "", typeof(Dummy), "").ability;
+    private static Ability ability = AbilityManager.New(Plugin.PluginGuid, "dummy", "", typeof(Dummy), "dummy.png").ability;
     public override Ability Ability => ability; 
 }

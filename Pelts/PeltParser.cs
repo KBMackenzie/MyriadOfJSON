@@ -32,25 +32,7 @@ internal static class PeltParser
                 && x.HasCardMetaCategory(CardMetaCategory.Rare)
             ) return false;
             
-            /*
-            // Expression is a predicate to filter the cards with.
-            Expression pred = new Expression(exp);
-            // Parameters!
-            // 1. Costs
-            pred.Parameters["BloodCost"] = x.BloodCost;
-            pred.Parameters["BoneCost"] = x.BonesCost;
-            pred.Parameters["EnergyCost"] = x.EnergyCost;
-            pred.Parameters["GemsCost"] = x.GemsCost.Select(x => x.ToString()); // IEnumerable<string> !! 
-            // 2. Temple, Tribes, Traits
-            pred.Parameters["Temple"] = x.temple.ToString();
-            pred.Parameters["Tribes"] = x.tribes.Select(x => x.ToString());
-            pred.Parameters["Traits"] = x.traits.Select(x => x.ToString());
-            // 3. Abilities, Special Abilities
-            pred.Parameters["Abilities"] = x.Abilities.Select(x => x.ToString());
-            pred.Parameters["SpecialAbilities"] = x.SpecialAbilities.Select(x => x.ToString());
-            */
-
-            Expression? pred = ExpressionHandler.CardPredicate(exp, x);
+            Expression? pred = ExpHandler.CardPredicate(exp, x);
             if (pred == null) return true; // Default to true!
 
             object? result = null;

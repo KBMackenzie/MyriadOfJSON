@@ -82,7 +82,7 @@ public class DummyItem : ConsumableItem
         Expression exp = new(condition);
         // Add parameters to exp here.
         // TODO
-        bool newResult = ExpressionHandler.SafeEvaluation(exp);
+        bool newResult = ExpHandler.SafeEvaluation(exp);
 
         __result = newResult;
     }

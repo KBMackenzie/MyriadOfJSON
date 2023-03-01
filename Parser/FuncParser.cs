@@ -16,7 +16,8 @@ public static class FuncParser
     public static readonly Regex FunctionRegex = new (
             @"^(.*)(("
             + FunctionLib.AllNames.AsRegexOr() 
-            + @")\((.*)\))(.*)$"
+            + @")\((.*)\))(.*)$",
+            RegexOptions.Compiled
         ); 
 
     /* FunctionRegex Capture Groups:
