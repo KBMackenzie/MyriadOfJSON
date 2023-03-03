@@ -2,15 +2,16 @@ using System.Collections.Generic;
 using MiscellaneousJSON.Helpers;
 using DiskCardGame;
 using InscryptionAPI.Card;
+using MiscellaneousJSON.Parser.Names;
 
-namespace MiscellaneousJSON.Parser;
+namespace MiscellaneousJSON.Parser.Functions;
 
 // Type alias
 using CardFunc = System.Func<DiskCardGame.CardInfo, string, MiscellaneousJSON.Parser.NCalcBool>;
 
-public static class FunctionLib
+public static class CardPredicates
 {
-    public static readonly string[] AllNames =
+    public static readonly string[] Names =
     {
         FunctionNames.HasTribe,
         FunctionNames.HasTrait,
@@ -30,15 +31,7 @@ public static class FunctionLib
     };
 
     public static NCalcBool HasTribe(CardInfo card, string tribeName)
-    {
-        if (EnumHelpers.TryParse(tribeName, out Tribe t))
-            return card.IsOfTribe(t);
-        
-        (string, string) customTribeName = tribeName.GetGuidAndName();
-        Tribe customTribe = ParserUtils.GetCustomTribe(customTribeName);
-
-        return card.IsOfTribe(customTribe);
-    }
+        => card.IsOfTribe(CardData.GetTribe(tribeName));
 
     public static NCalcBool HasTrait(CardInfo card, string traitName)
         => EnumHelpers.TryParse(traitName, out Trait t)
@@ -53,24 +46,8 @@ public static class FunctionLib
            && card.appearanceBehaviour.Contains(a);
 
     public static NCalcBool HasAbility(CardInfo card, string abilityName)
-    {
-        if (EnumHelpers.TryParse(abilityName, out Ability a))
-            return card.HasAbility(a);
-
-        (string, string) customAbilityName = abilityName.GetGuidAndName();
-        Ability customAbility = ParserUtils.GetCustomAbility(customAbilityName);
-
-        return card.HasAbility(customAbility);
-    }
+        => card.HasAbility(CardData.GetAbility(abilityName));
 
     public static NCalcBool HasSpecialAbility(CardInfo card, string specialAbilityName)
-    {
-        if (EnumHelpers.TryParse(specialAbilityName, out SpecialTriggeredAbility s))
-            return card.HasSpecialAbility(s);
-
-        (string, string) customSpAbilityName = specialAbilityName.GetGuidAndName();
-        SpecialTriggeredAbility customSpAbility = ParserUtils.GetCustomSpecialAbility(customSpAbilityName);
-
-        return card.HasSpecialAbility(customSpAbility);
-    }
+        => card.HasSpecialAbility(CardData.GetSpecialAbility(specialAbilityName));
 }

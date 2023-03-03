@@ -32,22 +32,9 @@ internal static class PeltParser
                 && x.HasCardMetaCategory(CardMetaCategory.Rare)
             ) return false;
             
-            Expression? pred = ExpHandler.CardPredicate(exp, x);
+            Expression? pred = ExpressionHandler.CardPredicate(exp, x);
             if (pred == null) return true; // Default to true!
 
-            object? result = null;
-
-            try
-            {
-                result = pred.Evaluate();
-            }
-            catch(EvaluationException e)
-            {
-                Plugin.LogError($"Error caught in expression: {exp ?? "(null)"}");
-                Plugin.LogError(e.Message);
-                return true; // Defaults to accepting any and all cards in case of an error.
-            }
-
-            return result is bool b && b;
+            return ExpressionHandler.SafeEvaluation(pred); 
         });
 }

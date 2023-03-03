@@ -21,6 +21,7 @@ public class DummyItem : ConsumableItem
     public override IEnumerator ActivateSequence()
     {
         base.PlayExitAnimation();
+        // Wait for dramatic effect.
         yield return new WaitForSeconds(0.25f);       
         yield break;
     }
@@ -82,7 +83,7 @@ public class DummyItem : ConsumableItem
         Expression exp = new(condition);
         // Add parameters to exp here.
         // TODO
-        bool newResult = ExpHandler.SafeEvaluation(exp);
+        bool newResult = ExpressionHandler.SafeEvaluation(exp);
 
         __result = newResult;
     }

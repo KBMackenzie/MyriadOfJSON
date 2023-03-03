@@ -1,11 +1,14 @@
 ﻿using System;
 using NCalc;
 using MiscellaneousJSON.Helpers;
+using MiscellaneousJSON.Parser.Functions;
+using MiscellaneousJSON.Parser.Names;
 using DiskCardGame;
 
+#pragma warning disable Publicizer001
 namespace MiscellaneousJSON.Parser;
 
-public static class ExpHandler
+public static class ExpressionHandler
 {
     public static Expression? CardPredicate(string? str, CardInfo card)
     {
@@ -13,7 +16,7 @@ public static class ExpHandler
         if (str == null || str.IsWhiteSpace()) return null;
 
         // Parse all functions
-        str = FuncParser.ParseFunctions(card, str);
+        str = AsCardPredicate.ParseAllFunctions(card, str);
 
         Plugin.LogInfo($"Parsed all functions: {str}");
         // Create expression.
@@ -25,8 +28,12 @@ public static class ExpHandler
         pred.Parameters[VarNames.EnergyCost] = card.EnergyCost;
         pred.Parameters[VarNames.Temple] = card.temple.ToString();
 
+        pred.Parameters[VarNames.Name] = card.name;
+        pred.Parameters[VarNames.DisplayedName] = card.displayedName;
+
         return pred;
     }
+
 
     public static bool SafeEvaluation(Expression? predicate)
     {

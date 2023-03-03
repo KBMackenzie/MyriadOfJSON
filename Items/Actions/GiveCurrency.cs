@@ -4,49 +4,79 @@ using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
 using MiscellaneousJSON.Helpers;
+using MiscellaneousJSON.Parser;
 using UnityEngine;
 using NCalc;
-using MiscellaneousJSON.Parser;
 
 #pragma warning disable Publicizer001
 
 namespace MiscellaneousJSON.Items.Actions;
-public class GiveCurrency : ActionBase
+public class GiveResources : ActionBase
 {
-    public string? Bones { get; set; }
-    public string? Energy { get; set; }
-    public string? Foils { get; set; }
-    
+    public enum Resource
+    {
+        None,
+        Bones,
+        Energy,
+        Foils
+    } 
+
+    public Resource ResourceType; 
+    public string? Expression;
+
+    public GiveResources(string? resourceType, string? expression)
+    {
+        ResourceType = EnumHelpers.TryParse(resourceType?.SentenceCase(), out Resource c) ? c : Resource.None;
+        Expression = expression;
+    }
+
     private int? ParseCurrency(string? x)
     {
         // TODO: Evaluate expression here instead! 
-        /* if (!int.TryParse(x, out int n) || n < 0) return null; */
-
         Expression exp = new Expression(x);
         // Add parameters.
         // TODO
-        return ExpHandler.SafelyParseAsInt(exp);
+        return ExpressionHandler.SafelyParseAsInt(exp);
     } 
+
+    private IEnumerator GiveBones(int? amount)
+    {
+        if (amount is null) yield break;
+        yield return Singleton<ResourcesManager>.Instance.AddBones(Math.Abs(amount.Value), null);
+    }
+
+    private IEnumerator GiveEnergy(int? amount)
+    {
+        if (amount is null) yield break;
+        int energyAmount = Math.Abs(amount.Value);
+        yield return Singleton<ResourcesManager>.Instance.AddMaxEnergy(energyAmount);
+        yield return Singleton<ResourcesManager>.Instance.AddEnergy(energyAmount);
+    }
+
+    private IEnumerator GiveFoils(int? amount)
+    {
+        if (amount == null) yield break;
+        int foilAmount = Math.Abs(amount.Value);
+        yield return Singleton<CurrencyBowl>.Instance.ShowGain(foilAmount, false, true);
+        RunState.Run.currency += foilAmount;
+        yield return new WaitForSeconds(0.2f);
+    }
 
     public override IEnumerator Trigger()
     {
-        int? addBones = ParseCurrency(Bones);
-        if (addBones != null)
+        switch (ResourceType)
         {
-            yield return Singleton<ResourcesManager>.Instance.AddBones(addBones.Value); 
+            case Resource.Bones:
+                yield return GiveBones(0 /*TODO: CHANGE THIS*/);
+                yield break;
+            case Resource.Energy:
+                yield return GiveEnergy(0 /* TODO */);
+                yield break;
+            case Resource.Foils:
+                yield return GiveFoils(0 /* TODO */);
+                yield break;
+            default:
+                yield break;
         }
-
-        int? addEnergy = ParseCurrency(Energy);
-        if (addEnergy != null)
-        {
-            yield return Singleton<ResourcesManager>.Instance.AddEnergy(addEnergy.Value);  
-        }
-        
-        int? addFoils = ParseCurrency(Energy);
-        if (addFoils != null)
-        {
-            yield return Singleton<CurrencyBowl>.Instance.DropWeightsIn(addFoils.Value);
-        }
-
-        yield break;
-    } }
+    }
+}

@@ -24,7 +24,6 @@ public class Plugin : BaseUnityPlugin
     private void Awake()
     {
         Instance = this; // Make log source.
-
         Harmony harmony = new Harmony("kel.harmony.miscjson");
         harmony.PatchAll();
 
@@ -40,6 +39,7 @@ public class Plugin : BaseUnityPlugin
 
     internal static void LogInfo(string message) => Instance?.Logger.LogInfo(message);
     internal static void LogError(string message) => Instance?.Logger.LogError(message);
+
 }
 
 public class Dummy : AbilityBehaviour

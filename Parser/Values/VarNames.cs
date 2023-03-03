@@ -1,4 +1,4 @@
-namespace MiscellaneousJSON.Parser;
+namespace MiscellaneousJSON.Parser.Names;
 
 public static class VarNames
 {
@@ -13,9 +13,8 @@ public static class VarNames
     public const string EnergyCost = "EnergyCost";
     public const string GemsCost = "GemsCost";
     public const string Temple = "Temple";
-    // public const string Tribes = "[Tribes]";
-    // public const string Abilities = "[Abilities]";
-    // public const string SpecialAbilities = "[SpecialAbilities]";
-    // public const string Traits = "[Traits]";
-    // public const string MetaCategories = "[MetaCategories]";
+    
+    // Card-specific params (again):
+    public const string Name = "InternalName";
+    public const string DisplayedName = "DisplayedName";
 }

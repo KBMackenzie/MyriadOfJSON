@@ -12,6 +12,11 @@ public class DrawCard : ActionBase
 {
    List<string>? CardsToDraw { get; set; }
 
+   public DrawCard(params string?[] cards)
+   {
+       CardsToDraw = cards.Where(x => x is not null).Cast<string>().ToList();
+   }
+
    public override IEnumerator Trigger()
    {
         if (CardsToDraw == null) yield break;

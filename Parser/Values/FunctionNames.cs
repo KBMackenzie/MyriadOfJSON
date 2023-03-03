@@ -1,4 +1,4 @@
-namespace MiscellaneousJSON.Parser;
+namespace MiscellaneousJSON.Parser.Names;
 
 public static class FunctionNames
 {
