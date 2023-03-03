@@ -3,7 +3,7 @@ using DiskCardGame;
 using MiscellaneousJSON.Helpers;
 
 namespace MiscellaneousJSON.Parser.Functions;
-using WorldAction = System.Action<string>;
+using WorldAction = System.Action<string, string>;
 
 public static class AsWorldAction
 {

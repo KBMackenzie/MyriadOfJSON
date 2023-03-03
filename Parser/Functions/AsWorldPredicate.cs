@@ -3,13 +3,13 @@ using DiskCardGame;
 using MiscellaneousJSON.Helpers;
 
 namespace MiscellaneousJSON.Parser.Functions;
-using WorldAction = System.Action<string>;
+using WorldFunc = System.Func<string, MiscellaneousJSON.Parser.NCalcBool>;
 
 public static class AsWorldPredicate 
 {
     public static readonly Regex FuncRegex = FunctionRegex.Generate(CardPredicates.Names); 
 
-    public static string ParseFunctions(CardInfo card, string exp)
+    public static string ParseFunctions(string exp)
     {
         /*
         if (!FuncRegex.IsMatch(exp)) return exp; 
@@ -20,7 +20,7 @@ public static class AsWorldPredicate
         throw new System.NotImplementedException();
     }
 
-    public static string Interpret(CardInfo card, string func, string funcParam)
+    public static string Interpret(string func, string funcParam)
     {
         /*
         CardFunc fn = CardPredicates.Functions[func];

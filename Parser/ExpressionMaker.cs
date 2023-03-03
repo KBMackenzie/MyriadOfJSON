@@ -7,7 +7,7 @@ using NCalc;
 
 namespace MiscellaneousJSON.Parser;
 
-public static class GenerateExpression
+public static class ExpressionMaker 
 {
     
 }
