@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using DiskCardGame;
 using InscryptionAPI.Card;
-using MiscellaneousJSON.Parser.Names;
+using MyriadOfJSON.Parser.Names;
 
-namespace MiscellaneousJSON.Parser.Functions;
+namespace MyriadOfJSON.Parser.Functions;
 using CardAction = System.Action<DiskCardGame.PlayableCard, string>;
 
 public static class CardActions

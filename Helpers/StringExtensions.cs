@@ -1,7 +1,7 @@
 using System.Linq;
 
 #nullable enable
-namespace MiscellaneousJSON.Helpers;
+namespace MyriadOfJSON.Helpers;
 
 public static class StringExtensions
 {

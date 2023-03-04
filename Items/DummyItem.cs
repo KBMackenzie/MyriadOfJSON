@@ -6,12 +6,12 @@ using InscryptionAPI.Items;
 using DiskCardGame;
 using GBC;
 using UnityEngine;
-using MiscellaneousJSON.Items.Actions;
+using MyriadOfJSON.Items.Actions;
 using HarmonyLib;
 using NCalc;
-using MiscellaneousJSON.Parser;
+using MyriadOfJSON.Parser;
 
-namespace MiscellaneousJSON.Items;
+namespace MyriadOfJSON.Items;
 
 public class DummyItem : ConsumableItem
 {

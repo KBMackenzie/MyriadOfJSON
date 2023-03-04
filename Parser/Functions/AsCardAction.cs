@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 
-namespace MiscellaneousJSON.Parser.Functions;
+namespace MyriadOfJSON.Parser.Functions;
 using CardAction = System.Action<DiskCardGame.PlayableCard, string>;
 
 public static class AsCardAction 

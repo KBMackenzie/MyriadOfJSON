@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using NCalc;
 using DiskCardGame;
 using InscryptionAPI.Card;
-using MiscellaneousJSON.Parser;
+using MyriadOfJSON.Parser;
 
-namespace MiscellaneousJSON.Pelts;
+namespace MyriadOfJSON.Pelts;
 
 internal static class PeltParser
 {

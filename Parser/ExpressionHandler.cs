@@ -1,13 +1,13 @@
 ﻿using System;
 using NCalc;
-using MiscellaneousJSON.Helpers;
-using MiscellaneousJSON.Parser.Functions;
-using MiscellaneousJSON.Parser.Names;
-using MiscellaneousJSON.Parser.Variables;
+using MyriadOfJSON.Helpers;
+using MyriadOfJSON.Parser.Functions;
+using MyriadOfJSON.Parser.Names;
+using MyriadOfJSON.Parser.Variables;
 using DiskCardGame;
 
 #pragma warning disable Publicizer001
-namespace MiscellaneousJSON.Parser;
+namespace MyriadOfJSON.Parser;
 
 public static class ExpressionHandler
 {

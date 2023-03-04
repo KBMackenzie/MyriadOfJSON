@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
-using MiscellaneousJSON.Helpers;
-using MiscellaneousJSON.Parser.Names;
+using MyriadOfJSON.Helpers;
+using MyriadOfJSON.Parser.Names;
 using DiskCardGame;
 using NCalc;
 
-namespace MiscellaneousJSON.Parser;
+namespace MyriadOfJSON.Parser;
 
 public static class ExpressionMaker 
 {

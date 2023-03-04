@@ -2,7 +2,7 @@ using System.Collections;
 using DiskCardGame;
 using UnityEngine;
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 // TODO!!!!!!!!!!!! IMPORTANT
 // - Parse expression

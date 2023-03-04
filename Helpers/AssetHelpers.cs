@@ -7,7 +7,7 @@ using System.Text;
 using UnityEngine;
 
 #nullable enable
-namespace MiscellaneousJSON.Helpers;
+namespace MyriadOfJSON.Helpers;
 
 public static class AssetHelpers
 {

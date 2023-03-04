@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DiskCardGame;
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 // TODO!!!!!!!!!!!! IMPORTANT
 // - Make dialogue event

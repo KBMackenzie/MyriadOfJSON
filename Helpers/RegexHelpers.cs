@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace MiscellaneousJSON.Helpers;
+namespace MyriadOfJSON.Helpers;
 
 public static class RegexHelpers
 {

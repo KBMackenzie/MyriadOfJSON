@@ -1,4 +1,4 @@
-namespace MiscellaneousJSON.Parser;
+namespace MyriadOfJSON.Parser;
 
 public class NCalcBool
 {

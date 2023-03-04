@@ -3,14 +3,14 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
-using MiscellaneousJSON.Parser;
+using MyriadOfJSON.Helpers;
+using MyriadOfJSON.Parser;
 using UnityEngine;
 using NCalc;
 
 #pragma warning disable Publicizer001
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 // TODO!!!!!!!!!!!! IMPORTANT
 // - Parse expression

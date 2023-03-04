@@ -3,11 +3,11 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
-using MiscellaneousJSON.Parser.Functions;
+using MyriadOfJSON.Helpers;
+using MyriadOfJSON.Parser.Functions;
 using UnityEngine;
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 public class DrawCard : ActionBase
 {

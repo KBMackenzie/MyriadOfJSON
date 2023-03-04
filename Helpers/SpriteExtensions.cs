@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MiscellaneousJSON.Helpers;
+namespace MyriadOfJSON.Helpers;
 
 internal static class SpriteExtensions
 {

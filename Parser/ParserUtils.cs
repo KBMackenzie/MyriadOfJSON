@@ -5,7 +5,7 @@ using InscryptionAPI.Guid;
 using InscryptionAPI.Card;
 using DiskCardGame;
 
-namespace MiscellaneousJSON.Parser;
+namespace MyriadOfJSON.Parser;
 
 public static class ParserUtils
 {

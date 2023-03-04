@@ -7,7 +7,7 @@ using UnityEngine;
 using InscryptionAPI.TalkingCards.Helpers;
 using InscryptionAPI.Items.Extensions;
 
-namespace MiscellaneousJSON.Items;
+namespace MyriadOfJSON.Items;
 
 public class ItemJSON
 {

@@ -1,13 +1,13 @@
 using BepInEx;
 using HarmonyLib;
-using MiscellaneousJSON.Pelts;
-using MiscellaneousJSON.Masks;
+using MyriadOfJSON.Pelts;
+using MyriadOfJSON.Masks;
 using InscryptionAPI;
 using InscryptionAPI.Card;
 using InscryptionAPI.Helpers;
 using DiskCardGame;
 
-namespace MiscellaneousJSON;
+namespace MyriadOfJSON;
 
 // Plugin base:
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
@@ -15,8 +15,8 @@ namespace MiscellaneousJSON;
 [BepInDependency("MADH.inscryption.JSONLoader", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {   
-    public const string PluginGuid = "kel.inscryption.miscjson";
-    public const string PluginName = "MiscellaneousJSON";
+    public const string PluginGuid = "kel.inscryption.myriadofJSON";
+    public const string PluginName = "MyriadOfJSON";
     public const string PluginVersion = "1.0.0";
     
     internal static Plugin? Instance; // Log source.

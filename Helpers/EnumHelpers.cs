@@ -1,7 +1,7 @@
 using System;
 
 #nullable disable
-namespace MiscellaneousJSON.Helpers;
+namespace MyriadOfJSON.Helpers;
 
 public static class EnumHelpers
 {

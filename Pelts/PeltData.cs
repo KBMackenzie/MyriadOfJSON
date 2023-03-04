@@ -1,9 +1,9 @@
 ﻿using DiskCardGame;
 using InscryptionAPI.Card;
 using InscryptionAPI.Pelts;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 
-namespace MiscellaneousJSON.Pelts;
+namespace MyriadOfJSON.Pelts;
 
 public class PeltData
 {

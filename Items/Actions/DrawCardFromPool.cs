@@ -3,12 +3,12 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using UnityEngine;
 using InscryptionAPI.Card;
 using Random = UnityEngine.Random;
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 // TODO!!!!!!!!!!!! IMPORTANT
 // - Parse expression

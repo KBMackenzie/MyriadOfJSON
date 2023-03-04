@@ -1,9 +1,9 @@
 ﻿using BepInEx;
 using System.IO;
 using Newtonsoft.Json;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 
-namespace MiscellaneousJSON.Pelts;
+namespace MyriadOfJSON.Pelts;
 
 internal static class LoadPelts
 {

@@ -1,4 +1,4 @@
-namespace MiscellaneousJSON.Parser.Names;
+namespace MyriadOfJSON.Parser.Names;
 
 public static class VarNames
 {

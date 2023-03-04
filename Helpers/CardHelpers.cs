@@ -2,7 +2,7 @@ using DiskCardGame;
 using System;
 
 #nullable enable
-namespace MiscellaneousJSON.Helpers; 
+namespace MyriadOfJSON.Helpers; 
 
 internal class CardHelpers
 {

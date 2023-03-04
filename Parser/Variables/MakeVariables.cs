@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using DiskCardGame;
 using NCalc;
-using MiscellaneousJSON.Parser.Names;
+using MyriadOfJSON.Parser.Names;
 
-namespace MiscellaneousJSON.Parser.Variables;
+namespace MyriadOfJSON.Parser.Variables;
 
 public static class MakeVariables
 {

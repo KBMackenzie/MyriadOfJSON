@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using DiskCardGame;
 
-namespace MiscellaneousJSON.Parser;
+namespace MyriadOfJSON.Parser;
 
 public static class CardData
 {

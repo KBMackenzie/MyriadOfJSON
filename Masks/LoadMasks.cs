@@ -3,10 +3,10 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using BepInEx;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using DiskCardGame;
 
-namespace MiscellaneousJSON.Masks;
+namespace MyriadOfJSON.Masks;
 
 internal static class LoadMasks
 {

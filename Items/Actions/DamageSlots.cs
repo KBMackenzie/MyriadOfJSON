@@ -3,10 +3,10 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using InscryptionAPI.Card;
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 // TODO!!!!!!!!!!!! IMPORTANT
 public class DamageSlots : ActionBase

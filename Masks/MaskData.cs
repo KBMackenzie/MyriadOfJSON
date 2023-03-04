@@ -1,8 +1,8 @@
 using InscryptionAPI.Masks;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 
-namespace MiscellaneousJSON.Masks;
+namespace MyriadOfJSON.Masks;
 
 public class MaskData
 {

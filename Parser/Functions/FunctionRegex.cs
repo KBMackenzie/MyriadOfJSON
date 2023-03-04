@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 
-namespace MiscellaneousJSON.Parser.Functions;
+namespace MyriadOfJSON.Parser.Functions;
 
 public static class FunctionRegex
 {

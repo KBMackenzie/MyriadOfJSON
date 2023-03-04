@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace MiscellaneousJSON.Items.Actions;
+namespace MyriadOfJSON.Items.Actions;
 
 public abstract class ActionBase
 {

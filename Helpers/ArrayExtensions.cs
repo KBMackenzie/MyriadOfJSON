@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace MiscellaneousJSON.Helpers;
+namespace MyriadOfJSON.Helpers;
 
 public static class ArrayExtensions
 {

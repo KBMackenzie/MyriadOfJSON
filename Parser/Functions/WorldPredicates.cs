@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 using DiskCardGame;
-using MiscellaneousJSON.Parser.Names;
+using MyriadOfJSON.Parser.Names;
 
-namespace MiscellaneousJSON.Parser.Functions;
-using WorldFunc = System.Func<string, MiscellaneousJSON.Parser.NCalcBool>;
+namespace MyriadOfJSON.Parser.Functions;
+using WorldFunc = System.Func<string, MyriadOfJSON.Parser.NCalcBool>;
 
 public static class WorldPredicates
 {

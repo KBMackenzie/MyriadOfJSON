@@ -1,9 +1,9 @@
 using System.Text.RegularExpressions;
 using DiskCardGame;
-using MiscellaneousJSON.Helpers;
+using MyriadOfJSON.Helpers;
 
-namespace MiscellaneousJSON.Parser.Functions;
-using CardFunc = System.Func<DiskCardGame.CardInfo, string, MiscellaneousJSON.Parser.NCalcBool>;
+namespace MyriadOfJSON.Parser.Functions;
+using CardFunc = System.Func<DiskCardGame.CardInfo, string, MyriadOfJSON.Parser.NCalcBool>;
 
 public static class AsCardPredicate
 {

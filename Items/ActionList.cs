@@ -1,10 +1,10 @@
-﻿using MiscellaneousJSON.Items.Actions;
+﻿using MyriadOfJSON.Items.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MiscellaneousJSON.Items;
+namespace MyriadOfJSON.Items;
 
 public class ActionList
 {
