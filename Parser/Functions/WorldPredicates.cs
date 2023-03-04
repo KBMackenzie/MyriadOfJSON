@@ -37,4 +37,17 @@ public static class WorldPredicates
         => Singleton<BoardManager>.Instance?.OpponentSlotsCopy
             ?.Where(x => x?.Card != null)
             ?.Any(x => x.Card.Info.name == cardName) ?? false;
+
+    public static NCalcBool BoardIsEmpty (string cardName)
+        => Singleton<BoardManager>.Instance?.AllSlotsCopy?.All(x => x.Card == null) ?? true;
+
+    public static NCalcBool SlotIsEmpty (string slot)
+    {
+        if (!int.TryParse(slot, out int slotIndex))
+        {
+            Plugin.LogError($"Invalid slot index: {slot ?? "(null)"}");
+            return false;
+        }
+        return Singleton<BoardManager>.Instance?.AllSlotsCopy?.ElementAt(slotIndex)?.Card == null;
+    }
 }

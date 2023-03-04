@@ -17,7 +17,9 @@ public static class CardPredicates
         FunctionNames.HasTrait,
         FunctionNames.HasAbility,
         FunctionNames.HasSpecialAbility,
-        FunctionNames.HasMetaCategory
+        FunctionNames.HasMetaCategory,
+        FunctionNames.HasAppearanceBehaviour,
+        FunctionNames.HasMoxCost
     };
 
     public static Dictionary<string, CardFunc> Functions = new()
@@ -27,7 +29,8 @@ public static class CardPredicates
         { FunctionNames.HasAbility, HasAbility },
         { FunctionNames.HasSpecialAbility, HasSpecialAbility },
         { FunctionNames.HasMetaCategory, HasMetaCategory },
-        { FunctionNames.HasAppearanceBehaviour, HasAppearance }
+        { FunctionNames.HasAppearanceBehaviour, HasAppearance },
+        { FunctionNames.HasMoxCost, HasMoxCost }
     };
 
     public static NCalcBool HasTribe(CardInfo card, string tribeName)
@@ -50,4 +53,8 @@ public static class CardPredicates
 
     public static NCalcBool HasSpecialAbility(CardInfo card, string specialAbilityName)
         => card.HasSpecialAbility(CardData.GetSpecialAbility(specialAbilityName));
+
+    public static NCalcBool HasMoxCost(CardInfo card, string moxCostName)
+        => EnumHelpers.TryParse(moxCostName, out GemType gemCost)
+            && card.GemsCost.Contains(gemCost);
 }

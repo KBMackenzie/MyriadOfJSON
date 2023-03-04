@@ -3,6 +3,7 @@ using NCalc;
 using MiscellaneousJSON.Helpers;
 using MiscellaneousJSON.Parser.Functions;
 using MiscellaneousJSON.Parser.Names;
+using MiscellaneousJSON.Parser.Variables;
 using DiskCardGame;
 
 #pragma warning disable Publicizer001
@@ -22,14 +23,8 @@ public static class ExpressionHandler
         // Create expression.
         Expression pred = new Expression(str);
 
-        // Additional params!
-        pred.Parameters[VarNames.BloodCost] = card.BloodCost;
-        pred.Parameters[VarNames.BoneCost] = card.BonesCost;
-        pred.Parameters[VarNames.EnergyCost] = card.EnergyCost;
-        pred.Parameters[VarNames.Temple] = card.temple.ToString();
-
-        pred.Parameters[VarNames.Name] = card.name;
-        pred.Parameters[VarNames.DisplayedName] = card.displayedName;
+        // Add card variables
+        MakeVariables.CardVariables(ref pred, card);
 
         return pred;
     }

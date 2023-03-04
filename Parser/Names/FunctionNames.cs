@@ -9,6 +9,7 @@ public static class FunctionNames
     public const string HasSpecialAbility = "hasSpecialAbility";
     public const string HasMetaCategory = "hasMetaCategory";
     public const string HasAppearanceBehaviour = "hasAppearance";
+    public const string HasMoxCost = "hasMoxCost";
 
     // Card actions:
     public const string AddAbility = "addAbility";
