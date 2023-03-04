@@ -21,8 +21,8 @@ public class ManageResources : ActionBase
         Foils
     } 
 
-    public Resource ResourceType; 
-    public string ExpressionStr;
+    public Resource ResourceType { get; set; } 
+    public string ExpressionStr { get; set; }
 
     public ManageResources(string? resourceType, string? expressionStr)
     {
