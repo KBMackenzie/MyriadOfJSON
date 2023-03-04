@@ -17,12 +17,4 @@ public static class ParserUtils
 
     public static SpecialTriggeredAbility GetCustomSpecialAbility((string guid, string name) specialAbility)
         => GuidManager.GetEnumValue<SpecialTriggeredAbility>(specialAbility.guid, specialAbility.name);
-
-    private static string? GetAbilityName(string abilityName)
-    {
-        AbilityManager.FullAbility? x = AbilityManager.AllAbilities
-            .Where(x => x.Info.name == abilityName)
-            .FirstOrDefault();  
-        return x?.Info?.name;
-    }
 }

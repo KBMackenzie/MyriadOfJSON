@@ -9,12 +9,12 @@ public static class AsWorldPredicate
 {
     public static readonly Regex FuncRegex = FunctionRegex.Generate(WorldPredicates.Names); 
 
-    public static string ParseFunctions(string exp)
+    public static string ParseAllFunctions(string exp)
     {
         if (!FuncRegex.IsMatch(exp)) return exp; 
         string[] groups = RegexHelpers.FirstMatch(FuncRegex, exp);
         string replace = Interpret(groups[3], groups[4]);
-        return ParseFunctions(groups[1]) + replace + groups[5];
+        return ParseAllFunctions(groups[1]) + replace + groups[5];
     }
 
     public static string Interpret(string func, string funcParam)

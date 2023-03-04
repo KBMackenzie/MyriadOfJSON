@@ -1,6 +1,6 @@
 namespace MyriadOfJSON.Parser;
 
-public class NCalcBool
+public struct NCalcBool
 {
     public bool Boolean { get; private set; }
 

@@ -4,31 +4,48 @@ using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
 using MyriadOfJSON.Helpers;
+using MyriadOfJSON.Parser;
+using MyriadOfJSON.Parser.Functions;
 using UnityEngine;
 using InscryptionAPI.Card;
 using Random = UnityEngine.Random;
+using NCalc;
 
 namespace MyriadOfJSON.Items.Actions;
 
-// TODO!!!!!!!!!!!! IMPORTANT
-// - Parse expression
-// - Add callbacks
 public class DrawCardFromPool : ActionBase
 {
-    public List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!
-    public int? CardAmount { get; set; }
-    public Func<CardInfo, bool>? Predicate { get; set; }
+    public string ExpressionStr { get; set; }
+    public int CardAmount { get; set; } /* defaults to 1! */
+    public string[] Callbacks { get; set; }
 
-    public void CreateCardPool()
+    public List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!
+
+    public DrawCardFromPool(string? expressionStr, int? cardAmount, string[]? callbacks)
     {
-        if (Predicate == null) return;
-        CardPool = CardManager.AllCardsCopy.Where(Predicate).ToList(); 
+        ExpressionStr = expressionStr ?? "true";
+        CardAmount = cardAmount ?? 1;
+        Callbacks = callbacks ?? new string[0];
+    }
+
+    public bool Predicate(CardInfo card)
+    {
+        /* Giant cards are silly! */
+        if (card.HasTrait(Trait.Giant) || card.HasSpecialAbility(SpecialTriggeredAbility.GiantCard))
+            return false;
+
+        Expression? exp = ExpressionHandler.CardPredicate(ExpressionStr, card);
+        return ExpressionHandler.SafeEvaluation(exp);
+    }
+
+    public List<CardInfo> CreateCardPool()
+    {
+        return CardManager.AllCardsCopy.Where(Predicate).ToList(); 
     }
     
     public override IEnumerator Trigger()
     {
-        if (CardPool == null) yield break;
-        CardAmount ??= 1;
+        CardPool = CreateCardPool();
         for (int i = 0; i < CardAmount; i++)
         {
             int randomIndex = Random.Range(0, CardPool.Count - 1);
@@ -37,9 +54,8 @@ public class DrawCardFromPool : ActionBase
             Singleton<ViewManager>.Instance.SwitchToView(View.Default, false, false);
             yield return Singleton<CardSpawner>.Instance.SpawnCardToHand(
                     info: card,
-                    temporaryMods: new List<CardModificationInfo>(),
-                    spawnOffset: new Vector3(0f, 0f, 0f),
-                    onDrawnTriggerDelay: 0f
+                    temporaryMods: null, 
+                    cardSpawnedCallback: (x) => AsCardAction.ParseAllFunctions(x, Callbacks)
                 );
             yield return new WaitForSeconds(0.45f); 
         }

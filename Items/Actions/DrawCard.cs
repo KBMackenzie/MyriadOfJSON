@@ -15,10 +15,10 @@ public class DrawCard : ActionBase
    /* callback functions! <3 (have to be parsed) */
    string[] Callbacks { get; set; }
 
-   public DrawCard(string?[] cards, string?[] callbacks)
+   public DrawCard(string[]? cards, string[]? callbacks)
    {
-       CardsToDraw = cards.Where(x => !string.IsNullOrWhiteSpace(x)).Cast<string>().ToArray();
-       Callbacks = callbacks.Where(x => !string.IsNullOrWhiteSpace(x)).Cast<string>().ToArray();
+       CardsToDraw = cards ?? new string[0];
+       Callbacks = callbacks ?? new string[0];
    }
 
    public override IEnumerator Trigger()

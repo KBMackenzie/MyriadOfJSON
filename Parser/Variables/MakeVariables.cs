@@ -10,7 +10,7 @@ namespace MyriadOfJSON.Parser.Variables;
 
 public static class MakeVariables
 {
-    public static void CardVariables (ref Expression exp, CardInfo card)
+    public static void CardVariables (Expression exp, CardInfo card)
     {
         exp.Parameters[VarNames.BloodCost] = card.BloodCost;
         exp.Parameters[VarNames.BoneCost] = card.BonesCost;
@@ -21,8 +21,14 @@ public static class MakeVariables
         exp.Parameters[VarNames.DisplayedName] = card.displayedName;
     }
 
-    public static void WorldVariables (ref Expression exp)
+    public static void WorldVariables (Expression exp)
     {
-
+        exp.Parameters[VarNames.BoneAmount] = VariableUtils.BoneAmount();
+        exp.Parameters[VarNames.MaxEnergy] = VariableUtils.MaxEnergy();
+        exp.Parameters[VarNames.EnergyAmount] = VariableUtils.EnergyAmount();
+        exp.Parameters[VarNames.OpponentName] = VariableUtils.OpponentName();
+        exp.Parameters[VarNames.TurnNumber] = VariableUtils.TurnNumber();
+        exp.Parameters[VarNames.ScaleDamage] = VariableUtils.ScaleBalance();
+        exp.Parameters[VarNames.FoilAmount] = VariableUtils.FoilAmount();
     }
 }

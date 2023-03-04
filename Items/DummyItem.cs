@@ -15,9 +15,9 @@ namespace MyriadOfJSON.Items;
 
 public class DummyItem : ConsumableItem
 {
+    /* All JSON items and their ActionList instances */
     public static Dictionary<string, ActionList> ItemActions = new();
 
-    // Patch that runs something specific for this IEnumerator for a custom item.
     public override IEnumerator ActivateSequence()
     {
         base.PlayExitAnimation();
@@ -26,16 +26,14 @@ public class DummyItem : ConsumableItem
         yield break;
     }
 
-    // Patch that changes the value *if* it returned true.
     public override bool ExtraActivationPrerequisitesMet()
     {
         if (!base.ExtraActivationPrerequisitesMet())
-        {
             return false;
-        }
         return true;
     }
 
+    /* Run actions for item! */
     [HarmonyPatch(typeof(DummyItem), nameof(DummyItem.ActivateSequence))]
     [HarmonyPostfix]
     private static IEnumerator ActivatePatch(IEnumerator enumerator, DummyItem __instance)
@@ -62,6 +60,7 @@ public class DummyItem : ConsumableItem
         }
     }
 
+    /* Check item's extra condition for activation! */
     [HarmonyPatch(typeof(DummyItem), nameof(DummyItem.ExtraActivationPrerequisitesMet))]
     [HarmonyPostfix]
     private static void PrerequisitesPatch(ref DummyItem __instance, ref bool __result)

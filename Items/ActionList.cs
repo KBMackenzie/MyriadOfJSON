@@ -6,6 +6,7 @@ using System.Text;
 
 namespace MyriadOfJSON.Items;
 
+/* A list of actions for an item! */
 public class ActionList
 {
     public string ItemName { get; }

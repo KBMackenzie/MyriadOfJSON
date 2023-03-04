@@ -20,15 +20,28 @@ public static class ExpressionHandler
         str = AsCardPredicate.ParseAllFunctions(card, str);
 
         Plugin.LogInfo($"Parsed all functions: {str}");
+
         // Create expression.
         Expression pred = new Expression(str);
-
         // Add card variables
-        MakeVariables.CardVariables(ref pred, card);
+        MakeVariables.CardVariables(pred, card);
 
         return pred;
     }
 
+    public static Expression? WorldPredicate(string str)
+    {
+        // Expression is a predicate to filter the cards with.
+        if (str == null || str.IsWhiteSpace()) return null;
+
+        str = AsWorldPredicate.ParseAllFunctions(str);
+
+        Expression pred = new Expression(str); 
+        // Add world variables
+        MakeVariables.WorldVariables(pred);
+
+        return pred;
+    }
 
     public static bool SafeEvaluation(Expression? predicate)
     {
