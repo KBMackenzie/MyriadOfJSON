@@ -7,7 +7,7 @@ using InscryptionAPI.Card;
 using MiscellaneousJSON.Parser.Names;
 
 namespace MiscellaneousJSON.Parser.Functions;
-using CardAction = PlayableCardAction<string>; 
+using CardAction = System.Action<DiskCardGame.PlayableCard, string>;
 
 public static class CardActions
 {
@@ -27,10 +27,10 @@ public static class CardActions
         // TODO
     };
 
-    public static void AddAbility(ref PlayableCard card, string abilityParam)
+    public static void AddAbility(PlayableCard card, string abilityParam)
         => card.AddTemporaryMod(new (CardData.GetAbility(abilityParam))); 
     
-    public static void AttackMod(ref PlayableCard card, string attackParam)
+    public static void AttackMod(PlayableCard card, string attackParam)
     {
         if (!int.TryParse(attackParam, out int attackModifier))
         {
@@ -43,7 +43,7 @@ public static class CardActions
         card.AddTemporaryMod(mod);
     }
 
-    public static void HealthMod(ref PlayableCard card, string healthParam)
+    public static void HealthMod(PlayableCard card, string healthParam)
     {
         if (!int.TryParse(healthParam, out int healthModifier))
         {

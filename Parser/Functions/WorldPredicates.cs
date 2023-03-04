@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using MiscellaneousJSON.Helpers;
 using DiskCardGame;
+using MiscellaneousJSON.Parser.Names;
 
 namespace MiscellaneousJSON.Parser.Functions;
 using WorldFunc = System.Func<string, MiscellaneousJSON.Parser.NCalcBool>;
@@ -11,11 +12,25 @@ public static class WorldPredicates
 {
     public static string[] Names =
     {
+        FunctionNames.HasCardInHand,
+        FunctionNames.HasCardInDeck,
+        FunctionNames.IsCardOnBoard,
+        FunctionNames.IsCardOnPlayerSide,
+        FunctionNames.IsCardOnOpponentSide,
+        FunctionNames.IsBoardEmpty,
+        FunctionNames.IsSlotEmpty
         // TODO
     };
 
     public static Dictionary<string, WorldFunc> Functions = new()
     {
+        { FunctionNames.HasCardInHand, HasCardInHand },
+        { FunctionNames.HasCardInDeck, HasCardInDeck },
+        { FunctionNames.IsCardOnBoard, IsCardOnBoard },
+        { FunctionNames.IsCardOnPlayerSide, IsCardOnPlayerSide },
+        { FunctionNames.IsCardOnOpponentSide, IsCardOnOpponentSide },
+        { FunctionNames.IsBoardEmpty, IsBoardEmpty },
+        { FunctionNames.IsSlotEmpty, IsSlotEmpty }
         // TODO
     };
 
@@ -25,23 +40,24 @@ public static class WorldPredicates
     public static NCalcBool HasCardInDeck (string cardName)
         => SaveManager.SaveFile.CurrentDeck?.Cards?.Any(x => x.name == cardName) ?? false;
 
-    public static NCalcBool CardIsOnBoard (string cardName)
+    public static NCalcBool IsCardOnBoard (string cardName)
         => Singleton<BoardManager>.Instance?.CardsOnBoard?.Any(x => x.Info.name == cardName) ?? false;
 
-    public static NCalcBool HasCardOnPlayerSide (string cardName)
+    public static NCalcBool IsCardOnPlayerSide (string cardName)
         => Singleton<BoardManager>.Instance?.PlayerSlotsCopy
             ?.Where(x => x?.Card != null)
             ?.Any(x => x.Card.Info.name == cardName) ?? false;
 
-    public static NCalcBool HasCardOnOpponentSide (string cardName)
+    public static NCalcBool IsCardOnOpponentSide (string cardName)
         => Singleton<BoardManager>.Instance?.OpponentSlotsCopy
             ?.Where(x => x?.Card != null)
             ?.Any(x => x.Card.Info.name == cardName) ?? false;
 
-    public static NCalcBool BoardIsEmpty (string cardName)
+    /* string param exists solely to comply with delegate! */
+    public static NCalcBool IsBoardEmpty (string _)
         => Singleton<BoardManager>.Instance?.AllSlotsCopy?.All(x => x.Card == null) ?? true;
 
-    public static NCalcBool SlotIsEmpty (string slot)
+    public static NCalcBool IsSlotEmpty (string slot)
     {
         if (!int.TryParse(slot, out int slotIndex))
         {

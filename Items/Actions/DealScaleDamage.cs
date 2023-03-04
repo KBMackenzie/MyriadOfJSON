@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace MiscellaneousJSON.Items.Actions;
 
+// TODO!!!!!!!!!!!! IMPORTANT
+// - Parse expression
 public class DealScaleDamage : ActionBase
 {
     public int? DamageAmount { get; set; }

@@ -6,6 +6,8 @@ using DiskCardGame;
 
 namespace MiscellaneousJSON.Items.Actions;
 
+// TODO!!!!!!!!!!!! IMPORTANT
+// - Make dialogue event
 public class ShowMessage : ActionBase
 {
     public string? Message;

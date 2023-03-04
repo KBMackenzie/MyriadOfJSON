@@ -19,5 +19,9 @@ public static class FunctionNames
     // World predicates:
     public const string HasCardInHand = "hasCardInHand";
     public const string HasCardInDeck = "hasCardInDeck";
-    public const string CardIsOnBoard = "cardIsOnBoard";
+    public const string IsCardOnBoard = "isCardOnBoard";
+    public const string IsCardOnPlayerSide = "isCardOnPlayerSide";
+    public const string IsCardOnOpponentSide = "isCardOnOpponentSide"; 
+    public const string IsBoardEmpty = "isBoardEmpty";
+    public const string IsSlotEmpty = "isSlotEmpty";
 }

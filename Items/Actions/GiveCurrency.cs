@@ -11,6 +11,9 @@ using NCalc;
 #pragma warning disable Publicizer001
 
 namespace MiscellaneousJSON.Items.Actions;
+
+// TODO!!!!!!!!!!!! IMPORTANT
+// - Parse expression
 public class GiveResources : ActionBase
 {
     public enum Resource

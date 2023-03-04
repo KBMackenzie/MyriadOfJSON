@@ -3,13 +3,14 @@ using DiskCardGame;
 using MiscellaneousJSON.Helpers;
 
 namespace MiscellaneousJSON.Parser.Functions;
-using CardAction = PlayableCardAction<string>; 
+using CardAction = System.Action<DiskCardGame.PlayableCard, string>;
 
-public static class AsAction 
+public static class AsCardAction 
 {
     public static readonly Regex FuncRegex = FunctionRegex.Generate(CardActions.Names); 
 
-    public static void ParseFunctions(ref PlayableCard card, string[] exps)
+    /* these functions are meant to work like ~callbacks~ and they're applied to the card in order! <3 */
+    public static void ParseAllFunctions(PlayableCard card, string[] exps)
     {
         foreach (string exp in exps)
         {
@@ -19,13 +20,13 @@ public static class AsAction
                 continue;
             }
             string[] groups = RegexHelpers.FirstMatch(FuncRegex, exp);
-            Interpret(ref card, groups[3], groups[4]);
+            Interpret(card, groups[3], groups[4]);
         }
     }
 
-    public static void Interpret(ref PlayableCard card, string func, string funcParam)
+    public static void Interpret(PlayableCard card, string func, string funcParam)
     {
         CardAction fn = CardActions.Functions[func];
-        fn(ref card, funcParam.TrimSingleQuotes());
+        fn(card, funcParam.TrimSingleQuotes());
     }
 }

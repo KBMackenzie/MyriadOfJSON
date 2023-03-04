@@ -10,6 +10,9 @@ using Random = UnityEngine.Random;
 
 namespace MiscellaneousJSON.Items.Actions;
 
+// TODO!!!!!!!!!!!! IMPORTANT
+// - Parse expression
+// - Add callbacks
 public class DrawCardFromPool : ActionBase
 {
     public List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!

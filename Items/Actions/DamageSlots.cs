@@ -8,6 +8,7 @@ using InscryptionAPI.Card;
 
 namespace MiscellaneousJSON.Items.Actions;
 
+// TODO!!!!!!!!!!!! IMPORTANT
 public class DamageSlots : ActionBase
 {
     public override IEnumerator Trigger()

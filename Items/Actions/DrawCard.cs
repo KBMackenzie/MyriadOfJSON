@@ -4,22 +4,25 @@ using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
 using MiscellaneousJSON.Helpers;
+using MiscellaneousJSON.Parser.Functions;
 using UnityEngine;
 
 namespace MiscellaneousJSON.Items.Actions;
 
 public class DrawCard : ActionBase
 {
-   List<string>? CardsToDraw { get; set; }
+   string[] CardsToDraw { get; set; }
+   /* callback functions! <3 (have to be parsed) */
+   string[] Callbacks { get; set; }
 
-   public DrawCard(params string?[] cards)
+   public DrawCard(string?[] cards, string?[] callbacks)
    {
-       CardsToDraw = cards.Where(x => x is not null).Cast<string>().ToList();
+       CardsToDraw = cards.Where(x => !string.IsNullOrWhiteSpace(x)).Cast<string>().ToArray();
+       Callbacks = callbacks.Where(x => !string.IsNullOrWhiteSpace(x)).Cast<string>().ToArray();
    }
 
    public override IEnumerator Trigger()
    {
-        if (CardsToDraw == null) yield break;
         foreach (string? cardName in CardsToDraw)
         {
             CardInfo? card = CardHelpers.Get(cardName); 
@@ -28,11 +31,10 @@ public class DrawCard : ActionBase
             Singleton<ViewManager>.Instance.SwitchToView(View.Default, false, false);
             yield return Singleton<CardSpawner>.Instance.SpawnCardToHand(
                     info: card,
-                    temporaryMods: new List<CardModificationInfo>(),
-                    spawnOffset: new Vector3(0f, 0f, 0f),
-                    onDrawnTriggerDelay: 0f
+                    temporaryMods: null,
+                    cardSpawnedCallback: (x) => AsCardAction.ParseAllFunctions(x, Callbacks)
                 );
-            yield return new WaitForSeconds(0.45f); 
+            yield return new WaitForSeconds(0.45f); // Maybe too long? TODO
         }
         yield break;
    } 
