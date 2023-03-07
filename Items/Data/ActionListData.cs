@@ -6,7 +6,7 @@ namespace MyriadOfJSON.Items.Data;
 
 public class ActionListData
 {
-    public DrawCardsData[]? drawCards { get; set; }
+    public DrawCardData[]? drawCards { get; set; }
     public ScaleBalanceData[]? scaleBalance { get; set; }
     public ManageResourcesData[]? manageResources { get; set; }
     public DrawCardFromPoolData[]? drawCardsFromPool { get; set; }

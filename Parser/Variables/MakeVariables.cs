@@ -1,11 +1,8 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using MyriadOfJSON.Helpers;
 using DiskCardGame;
 using NCalc;
 using MyriadOfJSON.Parser.Names;
 
+#pragma warning disable Publicizer001
 namespace MyriadOfJSON.Parser.Variables;
 
 public static class MakeVariables

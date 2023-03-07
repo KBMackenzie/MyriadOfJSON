@@ -13,7 +13,7 @@ public class DrawCard : ActionBase
    /* callback functions! <3 (have to be parsed) */
    string[] Callbacks { get; set; }
 
-   public DrawCard(DrawCardsData data)
+   public DrawCard(DrawCardData data)
    {
        CardsToDraw = data.cardNames ?? new string[0]; 
        Callbacks = data.callbacks ?? new string[0];

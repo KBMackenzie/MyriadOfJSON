@@ -2,7 +2,7 @@ using MyriadOfJSON.Items.Actions;
 
 namespace MyriadOfJSON.Items.Data;
 
-public class DrawCardsData : SortableActionData<DrawCard>
+public class DrawCardData : SortableActionData<DrawCard>
 {
     public string[]? cardNames { get; set; }
     public string[]? callbacks { get; set; }
