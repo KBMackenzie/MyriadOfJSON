@@ -9,10 +9,12 @@ namespace MyriadOfJSON.Items.Actions;
 public class ScaleBalance : ActionBase
 {
     public string ExpressionStr { get; set; }
+    public bool ToPlayer { get; set; }
 
-    public ScaleBalance(string? expressionStr)
+    public ScaleBalance(string? expressionStr, bool? toPlayer)
     {
         ExpressionStr = expressionStr ?? "true";
+        ToPlayer = toPlayer ?? false;
     }
 
     /* if false, evaluation failed */
@@ -27,13 +29,12 @@ public class ScaleBalance : ActionBase
     public override IEnumerator Trigger()
     {
         if (!EvaluateExpression(out int amount)) yield break;
-
-        bool toPlayer = amount < 0;
+        amount = Mathf.Abs(amount);
 
         yield return Singleton<LifeManager>.Instance?.ShowDamageSequence(
                     damage: amount,
                     numWeights: amount,
-                    toPlayer: toPlayer 
+                    toPlayer: ToPlayer 
                 );
         yield break;
     }

@@ -1,9 +1,7 @@
-using System;
-using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using DiskCardGame;
 using MyriadOfJSON.Helpers;
+using MyriadOfJSON.Items.Data;
 using MyriadOfJSON.Parser.Functions;
 using UnityEngine;
 
@@ -15,10 +13,10 @@ public class DrawCard : ActionBase
    /* callback functions! <3 (have to be parsed) */
    string[] Callbacks { get; set; }
 
-   public DrawCard(string[]? cards, string[]? callbacks)
+   public DrawCard(DrawCardsData data)
    {
-       CardsToDraw = cards ?? new string[0];
-       Callbacks = callbacks ?? new string[0];
+       CardsToDraw = data.cardNames ?? new string[0]; 
+       Callbacks = data.callbacks ?? new string[0];
    }
 
    public override IEnumerator Trigger()

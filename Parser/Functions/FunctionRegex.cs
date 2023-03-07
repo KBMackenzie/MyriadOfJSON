@@ -9,7 +9,7 @@ public static class FunctionRegex
             @"^(.*)(("
             + functionNames.AsRegexOr() 
             + @")\((.*)\))(.*)$",
-            RegexOptions.Compiled
+            RegexOptions.Compiled | RegexOptions.IgnoreCase
         ); 
 
     /* FunctionRegex Capture Groups:

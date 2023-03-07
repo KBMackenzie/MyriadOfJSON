@@ -1,13 +1,9 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using InscryptionAPI.Items;
 using DiskCardGame;
-using UnityEngine;
 using InscryptionAPI.Items.Extensions;
 using MyriadOfJSON.Helpers;
 
-namespace MyriadOfJSON.Items;
+namespace MyriadOfJSON.Items.Data;
 using ModelType = ConsumableItemManager.ModelType;
 
 public class ItemData
@@ -24,6 +20,10 @@ public class ItemData
     public string? modelType { get; set; }
     public bool hasCustomModel { get; set; }
     public CustomModelData? customModelData { get; set; }
+
+    /* fun ncalc! c: */
+    public string? activationCondition { get; set; }
+    // public AllActionData actions { get; set; }
 
     private ModelType GetModelType()
     {
@@ -48,20 +48,3 @@ public class ItemData
             .SetAct1();
 }
 
-public class CustomModelData
-{
-    public string? assetBundle { get; set; }
-    public string? gameObjectName { get; set; }
-
-    private static ModelType DefaultModelType
-        => ModelType.BasicRune;
-    
-    public ModelType MakeModel()
-    {
-        if (assetBundle == null || gameObjectName == null)
-            return DefaultModelType;
-
-        AssetBundle ab = AssetBundle.LoadFromFile(assetBundle);
-        return DefaultModelType;
-    }
-}

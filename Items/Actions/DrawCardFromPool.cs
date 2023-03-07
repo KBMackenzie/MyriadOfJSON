@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DiskCardGame;
 using MyriadOfJSON.Helpers;
 using MyriadOfJSON.Parser;
+using MyriadOfJSON.Items.Data;
 using MyriadOfJSON.Parser.Functions;
 using UnityEngine;
 using InscryptionAPI.Card;
@@ -18,20 +19,25 @@ public class DrawCardFromPool : ActionBase
     public string ExpressionStr { get; set; }
     public int CardAmount { get; set; } /* defaults to 1! */
     public string[] Callbacks { get; set; }
+    public bool AllowRareCards { get; set; }
 
     public List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!
 
-    public DrawCardFromPool(string? expressionStr, int? cardAmount, string[]? callbacks)
+    public DrawCardFromPool(string? expressionStr, int? cardAmount, string[]? callbacks, bool? allowRareCards)
     {
         ExpressionStr = expressionStr ?? "true";
         CardAmount = cardAmount ?? 1;
         Callbacks = callbacks ?? new string[0];
+        AllowRareCards = allowRareCards ?? false;
     }
 
     public bool Predicate(CardInfo card)
     {
         /* Giant cards are silly! */
         if (card.HasTrait(Trait.Giant) || card.HasSpecialAbility(SpecialTriggeredAbility.GiantCard))
+            return false;
+
+        if (!AllowRareCards && card.HasCardMetaCategory(CardMetaCategory.Rare))
             return false;
 
         Expression? exp = ExpressionHandler.CardPredicate(ExpressionStr, card);

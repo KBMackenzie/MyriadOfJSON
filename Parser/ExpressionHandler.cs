@@ -11,20 +11,21 @@ namespace MyriadOfJSON.Parser;
 
 public static class ExpressionHandler
 {
-    public static Expression? CardPredicate(string? str, CardInfo card)
+    public static Expression? CardPredicate(string? str, CardInfo card, bool world = true)
     {
-        // Expression is a predicate to filter the cards with.
         if (str == null || str.IsWhiteSpace()) return null;
 
-        // Parse all functions
+        /* parse all functions! */
         str = AsCardPredicate.ParseAllFunctions(card, str);
+        if (world) str = AsWorldPredicate.ParseAllFunctions(str);
 
         Plugin.LogInfo($"Parsed all functions: {str}");
 
-        // Create expression.
         Expression pred = new Expression(str);
-        // Add card variables
+        /* add card variables! */
         MakeVariables.CardVariables(pred, card);
+        /* add world variables! c: */
+        if (world) MakeVariables.WorldVariables(pred);
 
         return pred;
     }
@@ -35,6 +36,8 @@ public static class ExpressionHandler
         if (str == null || str.IsWhiteSpace()) return null;
 
         str = AsWorldPredicate.ParseAllFunctions(str);
+
+        Plugin.LogInfo($"Parsed all functions: {str}");
 
         Expression pred = new Expression(str); 
         // Add world variables
