@@ -17,6 +17,7 @@ public class DrawCard : ActionBase
    {
        CardsToDraw = data.cardNames ?? new string[0]; 
        Callbacks = data.callbacks ?? new string[0];
+       SetOrder(data);
    }
 
    public override IEnumerator Trigger()

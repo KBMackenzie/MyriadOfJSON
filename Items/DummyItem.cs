@@ -1,13 +1,9 @@
-using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections;
-using InscryptionAPI.Items;
+using System.Collections.Generic;
 using DiskCardGame;
-using GBC;
 using UnityEngine;
 using MyriadOfJSON.Items.Actions;
-using HarmonyLib;
 using NCalc;
 using MyriadOfJSON.Parser;
 
@@ -21,7 +17,9 @@ public class DummyItem : ConsumableItem
     public override IEnumerator ActivateSequence()
     {
         base.PlayExitAnimation();
-        // Wait for dramatic effect.
+        /* custom item action! c: */
+        yield return ActivateCustomItem();
+        /* wait for dramatic effect. c: */
         yield return new WaitForSeconds(0.25f);       
         yield break;
     }
@@ -30,61 +28,39 @@ public class DummyItem : ConsumableItem
     {
         if (!base.ExtraActivationPrerequisitesMet())
             return false;
-        return true;
+        return CustomItemCondition();
     }
 
-    /* Run actions for item! */
-    [HarmonyPatch(typeof(DummyItem), nameof(DummyItem.ActivateSequence))]
-    [HarmonyPostfix]
-    private static IEnumerator ActivatePatch(IEnumerator enumerator, DummyItem __instance)
+    private IEnumerator ActivateCustomItem()
     {
-        yield return enumerator;
-
-        /* The prefab ID for custom items in the CustomItemManager.New() method thingy is set as :
-            string prefabID = (data.name = pluginGUID + "_" + data.rulebookName);
-        I can use that! c: */
-
-        string prefabId = __instance.Data.PrefabId;
-
+        string prefabId = Data.PrefabId;
         object? itemAction = ItemActions
             .Where(x => prefabId.EndsWith(x.Key))
             .FirstOrDefault();
-
         if (itemAction == null) yield break;
 
         ActionList x = ((KeyValuePair<string, ActionList>)itemAction).Value;
-
         foreach (ActionBase action in x.Actions)
         {
             yield return action.Trigger();
         }
     }
 
-    /* Check item's extra condition for activation! */
-    [HarmonyPatch(typeof(DummyItem), nameof(DummyItem.ExtraActivationPrerequisitesMet))]
-    [HarmonyPostfix]
-    private static void PrerequisitesPatch(ref DummyItem __instance, ref bool __result)
+    private bool CustomItemCondition()
     {
-        // If __result is already false, then no need to do anything.
-        if (!__result) return;
-
-        string prefabId = __instance.Data.PrefabId;
-
-        var itemAction = ItemActions
+        string prefabId = Data.PrefabId;
+        object? itemAction = ItemActions
             .Where(x => prefabId.EndsWith(x.Key))
             .FirstOrDefault();
 
-        if (itemAction.Value == null) return;
+        /* activate if item doesn't exist! nothing will happen. :T */
+        if (itemAction == null) return true;
 
-        string? condition = itemAction.Value.Condition;
-        if (condition == null) return;
+        string? condition = ((KeyValuePair<string, ActionList>)itemAction).Value.Condition;
+        if (condition == null) return true;
 
-        Expression exp = new(condition);
-        // Add parameters to exp here.
-        // TODO
-        bool newResult = ExpressionHandler.SafeEvaluation(exp);
-
-        __result = newResult;
+        Expression? exp = ExpressionHandler.WorldPredicate(condition); 
+        return ExpressionHandler.SafeEvaluation(exp);
     }
 }
 
