@@ -23,9 +23,12 @@ public class ItemData
 
     /* fun ncalc! c: */
     public string? activationCondition { get; set; }
-    // public AllActionData actions { get; set; }
+    public ActionListData? actions { get; set; }
 
-    private ModelType GetModelType()
+    internal string GetItemName()
+        => $"{prefix}_{name}";
+
+    internal ModelType GetModelType()
     {
         if (customModelData != null)
             return customModelData.MakeModel();
@@ -46,5 +49,12 @@ public class ItemData
             ).SetPowerLevel(powerLevel ?? 0)
             .SetNotRandomlyGiven(notRandomlyGiven ?? false)
             .SetAct1();
+
+    internal void RegisterActions()
+    {
+        ActionList? allActions = actions?.CreateActions(GetItemName(), activationCondition);
+        if (allActions == null) return;
+        DummyItem.ItemActions.Add(GetItemName(), allActions);
+    }
 }
 

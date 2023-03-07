@@ -25,15 +25,13 @@ internal static class LoadMasks
     internal static void LoadJSON(string file)
     {
         MaskData? mask = JsonConvert.DeserializeObject<MaskData>(File.ReadAllText(file));
-
         if (mask == null)
         {
-            Plugin.LogError(""); // TODO
+            Plugin.LogError($"Couldn't load JSON data from \'{Path.GetFileName(file)}\'!"); 
             return;
         }
 
         mask.overrideMask = mask.overrideMask?.SentenceCase(); // Format override name
-
         if (!ValidOverride(mask)) 
         {
             Plugin.LogError($"Invalid mask override name: {mask.overrideMask ?? "(null)"}");

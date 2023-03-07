@@ -1,13 +1,8 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.IO;
-using BepInEx;
-using NCalc;
 using Newtonsoft.Json;
-using MyriadOfJSON.Parser;
 using MyriadOfJSON.Helpers;
 using MyriadOfJSON.Items.Data;
+using BepInEx;
 
 namespace MyriadOfJSON.Items;
 
@@ -28,6 +23,6 @@ public static class LoadItems
             return;
         }
         data.CreateItem();
-        // TODO: Handle actions here!
+        data.RegisterActions();
     }
 }

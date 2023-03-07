@@ -4,7 +4,7 @@ using MyriadOfJSON.Items.Actions;
 
 namespace MyriadOfJSON.Items.Data;
 
-public class AllActionData
+public class ActionListData
 {
     public DrawCardsData[]? drawCards { get; set; }
     public ScaleBalanceData[]? scaleBalance { get; set; }
