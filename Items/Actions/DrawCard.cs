@@ -9,9 +9,9 @@ namespace MyriadOfJSON.Items.Actions;
 
 public class DrawCard : ActionBase
 {
-   string[] CardsToDraw { get; set; }
+   public string[] CardsToDraw { get; }
    /* callback functions! <3 (have to be parsed) */
-   string[] Callbacks { get; set; }
+   public string[] Callbacks { get; }
 
    public DrawCard(DrawCardData data)
    {

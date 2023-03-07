@@ -10,12 +10,12 @@ namespace MyriadOfJSON.Items.Actions;
 
 public class ScaleBalance : ActionBase
 {
-    public string ExpressionStr { get; set; }
-    public bool ToPlayer { get; set; }
+    public string AmountExpression { get; }
+    public bool ToPlayer { get; }
 
     public ScaleBalance(ScaleBalanceData data)
     {
-        ExpressionStr = data.expression ?? "true";
+        AmountExpression = data.expression ?? "true";
         ToPlayer = data.toPlayer ?? false;
         SetOrder(data);
     }
@@ -23,7 +23,7 @@ public class ScaleBalance : ActionBase
     /* if false, evaluation failed */
     private bool EvaluateExpression(out int amount)
     {
-        Expression? exp = ExpressionHandler.WorldPredicate(ExpressionStr);
+        Expression? exp = ExpressionHandler.WorldPredicate(AmountExpression);
         int? result = ExpressionHandler.SafelyParseAsInt(exp);
         amount = result ?? 0;
         return result != null;

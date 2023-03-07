@@ -16,12 +16,12 @@ namespace MyriadOfJSON.Items.Actions;
 
 public class DrawCardFromPool : ActionBase
 {
-    private string CardCondition { get; set; }
-    private int CardAmount { get; set; } /* defaults to 1! */
-    private string[] Callbacks { get; set; }
-    private bool AllowRareCards { get; set; }
+    public string CardCondition { get; }
+    public int CardAmount { get; } /* defaults to 1! */
+    public string[] Callbacks { get; }
+    public bool AllowRareCards { get; }
 
-    private List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!
+    public List<CardInfo>? CardPool { get; private set; } /* filtered through with predicate! */
 
     public DrawCardFromPool(DrawCardFromPoolData data)
     {

@@ -22,8 +22,8 @@ public class ManageResources : ActionBase
         Foils
     } 
 
-    private Resource ResourceType { get; set; } 
-    private string ExpressionStr { get; set; }
+    public Resource ResourceType { get; } 
+    public string AmountExpression { get; }
 
     public ManageResources(ManageResourcesData data)
     {
@@ -31,13 +31,13 @@ public class ManageResources : ActionBase
                     data.resourceType?.SentenceCase(),
                     out Resource c
                 ) ? c : Resource.None;
-        ExpressionStr = data.expression ?? "true";
+        AmountExpression = data.expression ?? "true";
         SetOrder(data);
     }
 
     private bool ParseAmount(out int amount)
     {
-        Expression? exp = ExpressionHandler.WorldPredicate(ExpressionStr); 
+        Expression? exp = ExpressionHandler.WorldPredicate(AmountExpression); 
         int? result = ExpressionHandler.SafelyParseAsInt(exp);
         amount = result ?? 0;
         return result != null;
