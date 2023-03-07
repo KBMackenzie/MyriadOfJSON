@@ -26,7 +26,7 @@ public static class AsCardAction
 
     public static void Interpret(PlayableCard card, string func, string funcParam)
     {
-        CardAction fn = CardActions.Functions[func];
+        CardAction fn = CardActions.Functions[func.ToLower()];
         fn(card, funcParam.TrimSingleQuotes());
     }
 }

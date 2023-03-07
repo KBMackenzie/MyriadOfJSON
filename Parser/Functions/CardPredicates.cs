@@ -24,13 +24,13 @@ public static class CardPredicates
 
     public static Dictionary<string, CardFunc> Functions = new()
     {
-        { FunctionNames.HasTribe, HasTribe },
-        { FunctionNames.HasTrait, HasTrait },
-        { FunctionNames.HasAbility, HasAbility },
-        { FunctionNames.HasSpecialAbility, HasSpecialAbility },
-        { FunctionNames.HasMetaCategory, HasMetaCategory },
-        { FunctionNames.HasAppearanceBehaviour, HasAppearance },
-        { FunctionNames.HasMoxCost, HasMoxCost }
+        { FunctionNames.HasTribe.ToLower(), HasTribe },
+        { FunctionNames.HasTrait.ToLower(), HasTrait },
+        { FunctionNames.HasAbility.ToLower(), HasAbility },
+        { FunctionNames.HasSpecialAbility.ToLower(), HasSpecialAbility },
+        { FunctionNames.HasMetaCategory.ToLower(), HasMetaCategory },
+        { FunctionNames.HasAppearanceBehaviour.ToLower(), HasAppearance },
+        { FunctionNames.HasMoxCost.ToLower(), HasMoxCost }
     };
 
     public static NCalcBool HasTribe(CardInfo card, string tribeName)

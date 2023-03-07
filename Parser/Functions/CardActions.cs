@@ -21,9 +21,9 @@ public static class CardActions
 
     public static Dictionary<string, CardAction> Functions = new()
     {
-        { FunctionNames.AddAbility, AddAbility },
-        { FunctionNames.AttackMod, AttackMod },
-        { FunctionNames.HealthMod, HealthMod } 
+        { FunctionNames.AddAbility.ToLower(), AddAbility },
+        { FunctionNames.AttackMod.ToLower(), AttackMod },
+        { FunctionNames.HealthMod.ToLower(), HealthMod } 
         // TODO
     };
 

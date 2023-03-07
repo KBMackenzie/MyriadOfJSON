@@ -19,7 +19,7 @@ public static class AsWorldPredicate
 
     public static string Interpret(string func, string funcParam)
     {
-        WorldFunc fn = WorldPredicates.Functions[func];
+        WorldFunc fn = WorldPredicates.Functions[func.ToLower()];
         return fn(funcParam.TrimSingleQuotes());
     }
 }

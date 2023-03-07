@@ -24,13 +24,13 @@ public static class WorldPredicates
 
     public static Dictionary<string, WorldFunc> Functions = new()
     {
-        { FunctionNames.HasCardInHand, HasCardInHand },
-        { FunctionNames.HasCardInDeck, HasCardInDeck },
-        { FunctionNames.IsCardOnBoard, IsCardOnBoard },
-        { FunctionNames.IsCardOnPlayerSide, IsCardOnPlayerSide },
-        { FunctionNames.IsCardOnOpponentSide, IsCardOnOpponentSide },
-        { FunctionNames.IsBoardEmpty, IsBoardEmpty },
-        { FunctionNames.IsSlotEmpty, IsSlotEmpty }
+        { FunctionNames.HasCardInHand.ToLower(), HasCardInHand },
+        { FunctionNames.HasCardInDeck.ToLower(), HasCardInDeck },
+        { FunctionNames.IsCardOnBoard.ToLower(), IsCardOnBoard },
+        { FunctionNames.IsCardOnPlayerSide.ToLower(), IsCardOnPlayerSide },
+        { FunctionNames.IsCardOnOpponentSide.ToLower(), IsCardOnOpponentSide },
+        { FunctionNames.IsBoardEmpty.ToLower(), IsBoardEmpty },
+        { FunctionNames.IsSlotEmpty.ToLower(), IsSlotEmpty }
         // TODO
     };
 

@@ -19,7 +19,7 @@ public static class AsCardPredicate
 
     public static string Interpret(CardInfo card, string func, string funcParam)
     {
-        CardFunc fn = CardPredicates.Functions[func];
+        CardFunc fn = CardPredicates.Functions[func.ToLower()];
         return fn(card, funcParam.TrimSingleQuotes()); 
     }
 }
