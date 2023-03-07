@@ -25,8 +25,11 @@ public class ItemData
     public string? activationCondition { get; set; }
     public ActionListData? actions { get; set; }
 
-    internal string GetItemName()
-        => $"{prefix}_{name}";
+    internal string GuidAndPrefix()
+        => $"{Plugin.PluginGuid}_{prefix ?? string.Empty}";
+    
+    internal string InternalName()
+        => $"{GuidAndPrefix()}_{name ?? string.Empty}";
 
     internal ModelType GetModelType()
     {
@@ -40,7 +43,7 @@ public class ItemData
 
     internal ConsumableItemData CreateItem()
         => ConsumableItemManager.New(
-                prefix,
+                GuidAndPrefix(),
                 name ?? string.Empty,
                 description ?? string.Empty,
                 AssetHelpers.MakeTexture(rulebookTexture),
@@ -52,9 +55,9 @@ public class ItemData
 
     internal void RegisterActions()
     {
-        ActionList? allActions = actions?.CreateActions(GetItemName(), activationCondition);
+        ActionList? allActions = actions?.CreateActions(InternalName(), activationCondition);
         if (allActions == null) return;
-        DummyItem.ItemActions.Add(GetItemName(), allActions);
+        DummyItem.ItemActions.Add(InternalName(), allActions);
     }
 }
 
