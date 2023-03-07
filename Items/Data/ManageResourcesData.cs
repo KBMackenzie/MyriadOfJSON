@@ -8,6 +8,6 @@ public class ManageResourcesData : SortableActionData<ManageResources>
     public string? expression { get; set; }
 
     public override ManageResources Create()
-        => new(resourceType, expression);
+        => new(this);
 }
 

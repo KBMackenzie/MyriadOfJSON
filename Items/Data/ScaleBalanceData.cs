@@ -8,5 +8,5 @@ public class ScaleBalanceData : SortableActionData<ScaleBalance>
     public bool? toPlayer { get; set; }
 
     public override ScaleBalance Create()
-        => new(expression, toPlayer);
+        => new(this);
 }

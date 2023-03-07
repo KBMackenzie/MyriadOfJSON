@@ -10,5 +10,5 @@ public class DrawCardFromPoolData : SortableActionData<DrawCardFromPool>
     public bool? allowRareCards { get; set; }
 
     public override DrawCardFromPool Create()
-        => new(cardCondition, cardAmount, callbacks, allowRareCards);
+        => new(this);
 }

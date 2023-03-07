@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DiskCardGame;
 using MyriadOfJSON.Helpers;
 using MyriadOfJSON.Parser;
+using MyriadOfJSON.Items.Data;
 using UnityEngine;
 using NCalc;
 
@@ -21,13 +22,17 @@ public class ManageResources : ActionBase
         Foils
     } 
 
-    public Resource ResourceType { get; set; } 
-    public string ExpressionStr { get; set; }
+    private Resource ResourceType { get; set; } 
+    private string ExpressionStr { get; set; }
 
-    public ManageResources(string? resourceType, string? expressionStr)
+    public ManageResources(ManageResourcesData data)
     {
-        ResourceType = EnumHelpers.TryParse(resourceType?.SentenceCase(), out Resource c) ? c : Resource.None;
-        ExpressionStr = expressionStr ?? "true";
+        ResourceType = EnumHelpers.TryParse(
+                    data.resourceType?.SentenceCase(),
+                    out Resource c
+                ) ? c : Resource.None;
+        ExpressionStr = data.expression ?? "true";
+        SetOrder(data);
     }
 
     private bool ParseAmount(out int amount)

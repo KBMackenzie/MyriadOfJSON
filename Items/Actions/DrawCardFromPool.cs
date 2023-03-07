@@ -16,22 +16,23 @@ namespace MyriadOfJSON.Items.Actions;
 
 public class DrawCardFromPool : ActionBase
 {
-    public string ExpressionStr { get; set; }
-    public int CardAmount { get; set; } /* defaults to 1! */
-    public string[] Callbacks { get; set; }
-    public bool AllowRareCards { get; set; }
+    private string CardCondition { get; set; }
+    private int CardAmount { get; set; } /* defaults to 1! */
+    private string[] Callbacks { get; set; }
+    private bool AllowRareCards { get; set; }
 
-    public List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!
+    private List<CardInfo>? CardPool { get; set; } // Filtered through with Predicate!
 
-    public DrawCardFromPool(string? expressionStr, int? cardAmount, string[]? callbacks, bool? allowRareCards)
+    public DrawCardFromPool(DrawCardFromPoolData data)
     {
-        ExpressionStr = expressionStr ?? "true";
-        CardAmount = cardAmount ?? 1;
-        Callbacks = callbacks ?? new string[0];
-        AllowRareCards = allowRareCards ?? false;
+        CardCondition = data.cardCondition ?? "true";
+        CardAmount = data.cardAmount ?? 1;
+        Callbacks = data.callbacks ?? new string[0];
+        AllowRareCards = data.allowRareCards ?? false;
+        SetOrder(data);
     }
 
-    public bool Predicate(CardInfo card)
+    private bool Predicate(CardInfo card)
     {
         /* Giant cards are silly! */
         if (card.HasTrait(Trait.Giant) || card.HasSpecialAbility(SpecialTriggeredAbility.GiantCard))
@@ -40,11 +41,11 @@ public class DrawCardFromPool : ActionBase
         if (!AllowRareCards && card.HasCardMetaCategory(CardMetaCategory.Rare))
             return false;
 
-        Expression? exp = ExpressionHandler.CardPredicate(ExpressionStr, card);
+        Expression? exp = ExpressionHandler.CardPredicate(CardCondition, card);
         return ExpressionHandler.SafeEvaluation(exp);
     }
 
-    public List<CardInfo> CreateCardPool()
+    private List<CardInfo> CreateCardPool()
     {
         return CardManager.AllCardsCopy.Where(Predicate).ToList(); 
     }

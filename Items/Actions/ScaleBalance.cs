@@ -1,7 +1,9 @@
 using System.Collections;
+using MyriadOfJSON.Parser;
+using MyriadOfJSON.Items.Data;
 using DiskCardGame;
 using UnityEngine;
-using MyriadOfJSON.Parser;
+
 using NCalc;
 
 namespace MyriadOfJSON.Items.Actions;
@@ -11,10 +13,11 @@ public class ScaleBalance : ActionBase
     public string ExpressionStr { get; set; }
     public bool ToPlayer { get; set; }
 
-    public ScaleBalance(string? expressionStr, bool? toPlayer)
+    public ScaleBalance(ScaleBalanceData data)
     {
-        ExpressionStr = expressionStr ?? "true";
-        ToPlayer = toPlayer ?? false;
+        ExpressionStr = data.expression ?? "true";
+        ToPlayer = data.toPlayer ?? false;
+        SetOrder(data);
     }
 
     /* if false, evaluation failed */
