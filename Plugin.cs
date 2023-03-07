@@ -9,7 +9,6 @@ using MyriadOfJSON.Items;
 
 namespace MyriadOfJSON;
 
-// Plugin base:
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 [BepInDependency("cyantist.inscryption.api", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("MADH.inscryption.JSONLoader", BepInDependency.DependencyFlags.SoftDependency)]
