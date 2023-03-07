@@ -1,11 +1,11 @@
 using BepInEx;
 using HarmonyLib;
+using DiskCardGame;
+using BepInEx.Configuration;
+using InscryptionAPI.Card;
 using MyriadOfJSON.Pelts;
 using MyriadOfJSON.Masks;
-using InscryptionAPI;
-using InscryptionAPI.Card;
-using InscryptionAPI.Helpers;
-using DiskCardGame;
+using MyriadOfJSON.Items;
 
 namespace MyriadOfJSON;
 
@@ -19,31 +19,52 @@ public class Plugin : BaseUnityPlugin
     public const string PluginName = "MyriadOfJSON";
     public const string PluginVersion = "1.0.0";
     
-    internal static Plugin? Instance; // Log source.
+    internal static Plugin? Instance;
     
+    /* configs! c: */
+    internal static ConfigEntry<bool>? Debug;
+
     private void Awake()
     {
-        Instance = this; // Make log source.
+        Instance = this; /* singleton! */ 
         Harmony harmony = new Harmony("kel.harmony.miscjson");
         harmony.PatchAll();
 
-        Dummy dummy = new(); 
-        CardLoader.GetCardByName("Kingfisher").AddAbilities(dummy.Ability);
-        CardLoader.GetCardByName("Bullfrog").AddAbilities(dummy.Ability);
-        CardLoader.GetCardByName("AntFlying").AddAbilities(dummy.Ability);
-        CardLoader.GetCardByName("DireWolf").AddAbilities(dummy.Ability);
-        // System.Console.WriteLine($"Ability: {dummy.Ability}");
         LoadPelts.LoadAll();
-        // LoadMasks.LoadAll();
+        LoadMasks.LoadAll();
+        LoadItems.LoadAll();
+
+        LoadDebug(); /* TODO: remove */
     }
 
     internal static void LogInfo(string message) => Instance?.Logger.LogInfo(message);
     internal static void LogError(string message) => Instance?.Logger.LogError(message);
 
+    private static void LoadDebug()
+    {
+        DebugDummy.LoadDebugAbility();
+    }
 }
 
-public class Dummy : AbilityBehaviour
+public class DebugDummy : AbilityBehaviour
 {
-    private static Ability ability = AbilityManager.New(Plugin.PluginGuid, "dummy", "", typeof(Dummy), "dummy.png").ability;
+    private static Ability ability = AbilityManager.New(
+                Plugin.PluginGuid,
+                "debug_dummy",
+                "",
+                typeof(DebugDummy),
+                "dummy.png"
+            ).ability;
+
     public override Ability Ability => ability; 
+
+    public static void LoadDebugAbility()
+    {
+        CardLoader.GetCardByName("Kingfisher").AddAbilities(ability);
+        CardLoader.GetCardByName("Bullfrog").AddAbilities(ability);
+        CardLoader.GetCardByName("AntFlying").AddAbilities(ability);
+        CardLoader.GetCardByName("DireWolf").AddAbilities(ability);
+        // System.Console.WriteLine($"Ability: {dummy.Ability}");
+
+    }
 }
