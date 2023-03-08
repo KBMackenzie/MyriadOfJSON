@@ -19,4 +19,7 @@ public static class VarNames
     public const string Temple = "Temple";
     public const string Name = "InternalName";
     public const string DisplayedName = "DisplayedName";
+
+    /* Slot-specific variables : */
+    public const string SlotCardName = "SlotCardName";
 }

@@ -24,4 +24,7 @@ public static class VariableUtils
 
     public static int FoilAmount()
         => RunState.Run?.currency ?? 0; 
+
+    public static string SlotCardName(CardSlot slot)
+        => slot?.Card?.Info.name ?? string.Empty;
 }

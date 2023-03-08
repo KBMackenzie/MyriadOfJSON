@@ -28,4 +28,9 @@ public static class MakeVariables
         exp.Parameters[VarNames.ScaleDamage] = VariableUtils.ScaleBalance();
         exp.Parameters[VarNames.FoilAmount] = VariableUtils.FoilAmount();
     }
+
+    public static void SlotVariables (Expression exp, CardSlot slot)
+    {
+        exp.Parameters[VarNames.SlotCardName] = VariableUtils.SlotCardName(slot);
+    }
 }
