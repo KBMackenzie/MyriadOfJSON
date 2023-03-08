@@ -6,7 +6,7 @@ namespace MyriadOfJSON.Items;
 /* A list of actions for an item! */
 public class ActionList
 {
-    public string ItemName { get; }
+    public string ItemName { get; } /* internal name! */
     public string? Condition { get; }
 
     public readonly List<ActionBase> Actions = new();

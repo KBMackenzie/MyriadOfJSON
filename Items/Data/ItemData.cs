@@ -27,9 +27,13 @@ public class ItemData
 
     internal string GuidAndPrefix()
         => $"{Plugin.PluginGuid}_{prefix ?? string.Empty}";
-    
+
+    internal string GetName()
+        => name ?? string.Empty;
+
+    /* the internal name for an item, stored in ItemData.name */
     internal string InternalName()
-        => $"{GuidAndPrefix()}_{name ?? string.Empty}";
+        => $"{GuidAndPrefix()}_{GetName()}";
 
     internal ModelType GetModelType()
     {
@@ -44,7 +48,7 @@ public class ItemData
     internal ConsumableItemData CreateItem()
         => ConsumableItemManager.New(
                 GuidAndPrefix(),
-                name ?? string.Empty,
+                GetName(),
                 description ?? string.Empty,
                 AssetHelpers.MakeTexture(rulebookTexture),
                 typeof(DummyItem),

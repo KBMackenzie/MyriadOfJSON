@@ -31,15 +31,19 @@ public class DummyItem : ConsumableItem
         return CustomItemCondition();
     }
 
+    private bool IsValidCustomItem()
+        => ItemActions.ContainsKey(Data.name);
+
+    private ActionList? GetItemActions()
+        => IsValidCustomItem() ? ItemActions[Data.name] : null;
+
+    private string? GetActivationCondition()
+        => GetItemActions()?.Condition; 
+
     private IEnumerator ActivateCustomItem()
     {
-        string prefabId = Data.PrefabId;
-        object? itemAction = ItemActions
-            .Where(x => prefabId.EndsWith(x.Key))
-            .FirstOrDefault();
-        if (itemAction == null) yield break;
-
-        ActionList x = ((KeyValuePair<string, ActionList>)itemAction).Value;
+        ActionList? x = GetItemActions();
+        if (x == null) yield break;
         foreach (ActionBase action in x.Actions)
         {
             yield return action.Trigger();
@@ -48,16 +52,9 @@ public class DummyItem : ConsumableItem
 
     private bool CustomItemCondition()
     {
-        string prefabId = Data.PrefabId;
-        object? itemAction = ItemActions
-            .Where(x => prefabId.EndsWith(x.Key))
-            .FirstOrDefault();
-
-        /* activate if item doesn't exist! nothing will happen. :T */
-        if (itemAction == null) return true;
-
-        string? condition = ((KeyValuePair<string, ActionList>)itemAction).Value.Condition;
+        string? condition = GetActivationCondition();
         if (condition == null) return true;
+        /* activate if condition/item doesn't exist! nothing will happen. :T */
 
         Expression? exp = ExpressionHandler.WorldPredicate(condition); 
         return ExpressionHandler.SafeEvaluation(exp);
