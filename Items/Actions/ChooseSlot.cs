@@ -75,9 +75,9 @@ public class ChooseSlot
         yield break;
     }
 
-    public IEnumerable CardAction(Action<CardSlot> action)
+    public void CardAction(Action<CardSlot> action)
     {
-        if (Target == null) yield break;
+        if (Target == null) return;
         Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Locked;
         Singleton<InteractionCursor>.Instance.InteractionDisabled = true;
         action(Target);
