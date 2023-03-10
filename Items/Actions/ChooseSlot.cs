@@ -85,6 +85,6 @@ public class ChooseSlot
 
     public void End()
     {
-        Singleton<ViewManager>.Instance?.Controller.LockState = ViewLockState.Unlocked;
+        Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
     }
 }
