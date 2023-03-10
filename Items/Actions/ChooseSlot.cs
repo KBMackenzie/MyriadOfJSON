@@ -7,6 +7,7 @@ using UnityEngine;
 using MyriadOfJSON.Parser;
 using MyriadOfJSON.Helpers;
 using InscryptionAPI.Card;
+using NCalc;
 
 namespace MyriadOfJSON.Items.Actions;
 using SlotListFunc = System.Func<System.Collections.Generic.List<DiskCardGame.CardSlot>>;
@@ -22,8 +23,8 @@ public class ChooseSlot
     }
 
     public ChoiceType Choice { get; }
-    public string? SlotCondition { get; }
-    public string? CardCondition { get; }
+    public bool AllowEmptySlots { get; }
+    public string CardCondition { get; }
     public CardSlot? Target { get; private set; }
     private readonly View DefaultView = View.Board;
 
@@ -37,17 +38,20 @@ public class ChooseSlot
     public List<CardSlot> GetValidSlots()
         => GetSlots[Choice]().Where(Predicate).ToList(); 
 
-    public ChooseSlot(string? choiceType, string? cardCondition, string? slotCondition)
+    public ChooseSlot(string? choiceType, string? cardCondition, bool? allowEmptySlots)
     {
         Choice = EnumHelpers.TryParse(choiceType, out ChoiceType choice) ? choice : ChoiceType.All;
-        CardCondition = cardCondition;
-        SlotCondition = slotCondition;
+        CardCondition = cardCondition ?? "true";
+        AllowEmptySlots = allowEmptySlots ?? false;
     }
 
-    public bool Predicate(CardSlot cardSlot)
+    public bool Predicate(CardSlot slot)
     {
-        // TODO
-        return true;
+        if (!AllowEmptySlots && slot?.Card == null)
+            return false;
+
+        Expression? exp = ExpressionHandler.CardPredicate(CardCondition, slot.Card.Info);
+        return ExpressionHandler.SafeEvaluation(exp);
     }
 
     public IEnumerator Choose(Action<CardSlot>? onInvalidTarget = null)
