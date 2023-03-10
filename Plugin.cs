@@ -6,6 +6,7 @@ using InscryptionAPI.Card;
 using MyriadOfJSON.Pelts;
 using MyriadOfJSON.Masks;
 using MyriadOfJSON.Items;
+using System;
 
 namespace MyriadOfJSON;
 

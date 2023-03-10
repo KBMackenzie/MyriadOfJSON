@@ -27,7 +27,7 @@ public class ManageResources : ActionBase
 
     public ManageResources(ManageResourcesData data)
     {
-        ResourceType = EnumHelpers.TryParse(
+        ResourceType = Enum.TryParse(
                     data.resourceType?.SentenceCase(),
                     out Resource c
                 ) ? c : Resource.None;

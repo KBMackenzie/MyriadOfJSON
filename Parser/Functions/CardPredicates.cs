@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MyriadOfJSON.Helpers;
 using DiskCardGame;
@@ -37,15 +38,15 @@ public static class CardPredicates
         => card.IsOfTribe(CardData.GetTribe(tribeName));
 
     public static NCalcBool HasTrait(CardInfo card, string traitName)
-        => EnumHelpers.TryParse(traitName, out Trait t)
+        => Enum.TryParse(traitName, out Trait t)
            && card.HasTrait(t);
 
     public static NCalcBool HasMetaCategory(CardInfo card, string metaCategoryName)
-        => EnumHelpers.TryParse(metaCategoryName, out CardMetaCategory c)
+        => Enum.TryParse(metaCategoryName, out CardMetaCategory c)
            && card.HasCardMetaCategory(c);
 
     public static NCalcBool HasAppearance(CardInfo card, string appearanceName)
-        => EnumHelpers.TryParse(appearanceName, out CardAppearanceBehaviour.Appearance a)
+        => Enum.TryParse(appearanceName, out CardAppearanceBehaviour.Appearance a)
            && card.appearanceBehaviour.Contains(a);
 
     public static NCalcBool HasAbility(CardInfo card, string abilityName)
@@ -55,6 +56,6 @@ public static class CardPredicates
         => card.HasSpecialAbility(CardData.GetSpecialAbility(specialAbilityName));
 
     public static NCalcBool HasMoxCost(CardInfo card, string moxCostName)
-        => EnumHelpers.TryParse(moxCostName, out GemType gemCost)
+        => Enum.TryParse(moxCostName, out GemType gemCost)
             && card.GemsCost.Contains(gemCost);
 }

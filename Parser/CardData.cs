@@ -10,7 +10,7 @@ public static class CardData
 {
     public static Tribe GetTribe(string tribeName)
     {
-        if (EnumHelpers.TryParse(tribeName, out Tribe t))
+        if (Enum.TryParse(tribeName, out Tribe t))
             return t; 
         
         (string, string) customTribeName = tribeName.GetGuidAndName();
@@ -19,7 +19,7 @@ public static class CardData
 
     public static Ability GetAbility(string abilityName)
     {
-        if (EnumHelpers.TryParse(abilityName, out Ability a))
+        if (Enum.TryParse(abilityName, out Ability a))
             return a; 
 
         (string, string) customAbilityName = abilityName.GetGuidAndName();
@@ -28,7 +28,7 @@ public static class CardData
 
     public static SpecialTriggeredAbility GetSpecialAbility(string specialAbilityName)
     {
-        if (EnumHelpers.TryParse(specialAbilityName, out SpecialTriggeredAbility s))
+        if (Enum.TryParse(specialAbilityName, out SpecialTriggeredAbility s))
             return s;
 
         (string, string) customSpAbilityName = specialAbilityName.GetGuidAndName();

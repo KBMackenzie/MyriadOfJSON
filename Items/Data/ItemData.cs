@@ -1,7 +1,8 @@
+using System;
+using MyriadOfJSON.Helpers;
 using InscryptionAPI.Items;
 using DiskCardGame;
 using InscryptionAPI.Items.Extensions;
-using MyriadOfJSON.Helpers;
 
 namespace MyriadOfJSON.Items.Data;
 using ModelType = ConsumableItemManager.ModelType;
@@ -40,7 +41,7 @@ public class ItemData
         if (customModelData != null)
             return customModelData.MakeModel();
 
-        return EnumHelpers.TryParse(modelType?.SentenceCase(), out ModelType mt)
+        return Enum.TryParse(modelType?.SentenceCase(), out ModelType mt)
                 ? mt
                 : ModelType.BasicRune; 
     }

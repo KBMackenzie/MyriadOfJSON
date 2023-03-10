@@ -40,7 +40,7 @@ public class ChooseSlot
 
     public ChooseSlot(string? choiceType, string? cardCondition, bool? allowEmptySlots)
     {
-        Choice = EnumHelpers.TryParse(choiceType?.SentenceCase(), out ChoiceType choice)
+        Choice = Enum.TryParse(choiceType?.SentenceCase(), out ChoiceType choice)
                     ? choice
                     : ChoiceType.All;
         CardCondition = cardCondition ?? "true";
