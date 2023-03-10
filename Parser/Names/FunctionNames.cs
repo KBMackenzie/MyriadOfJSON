@@ -24,7 +24,4 @@ public static class FunctionNames
     public const string IsCardOnOpponentSide = "isCardOnOpponentSide"; 
     public const string IsBoardEmpty = "isBoardEmpty";
     public const string IsSlotEmpty = "isSlotEmpty";
-
-    // Slot predicate:
-    public const string SlotHasCard = "slotHasCard";
 }

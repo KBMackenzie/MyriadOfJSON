@@ -3,10 +3,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using DiskCardGame;
-using UnityEngine;
 using MyriadOfJSON.Parser;
 using MyriadOfJSON.Helpers;
-using InscryptionAPI.Card;
 using NCalc;
 
 namespace MyriadOfJSON.Items.Actions;
