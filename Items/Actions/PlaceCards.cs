@@ -9,7 +9,7 @@ using UnityEngine;
 namespace MyriadOfJSON.Items.Actions;
 using ChoiceType = ChooseSlot.ChoiceType;
 
-public class PlaceCards : SlotChoiceActionBase 
+public class PlaceCards : SlotActionBase 
 {
     public string? Card { get; }
     public string Slot { get; }

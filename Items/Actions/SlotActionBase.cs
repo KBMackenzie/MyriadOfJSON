@@ -3,7 +3,7 @@ using DiskCardGame;
 namespace MyriadOfJSON.Items.Actions;
 using ChoiceType = ChooseSlot.ChoiceType;
 
-public abstract class SlotChoiceActionBase : ActionBase
+public abstract class SlotActionBase : ActionBase
 {
     public const string Choose = "[choose]";
     public const string AllSlots = "[all]";
