@@ -26,7 +26,7 @@ public class ChooseSlot
     public CardSlot? Target { get; private set; }
     private readonly View DefaultView = View.Board;
 
-    public Dictionary<ChoiceType, SlotListFunc> GetSlots = new()
+    public static Dictionary<ChoiceType, SlotListFunc> GetSlots = new()
     {
         { ChoiceType.All, () => Singleton<BoardManager>.Instance.AllSlotsCopy }, 
         { ChoiceType.Player, () => Singleton<BoardManager>.Instance.PlayerSlotsCopy }, 
@@ -36,11 +36,21 @@ public class ChooseSlot
     public List<CardSlot> GetValidSlots()
         => GetSlots[Choice]().Where(Predicate).ToList(); 
 
+    public bool HasValidSlots()
+        => GetValidSlots().Count > 0;
+
     public ChooseSlot(string? choiceType, string? cardCondition, bool? allowEmptySlots)
     {
         Choice = Enum.TryParse(choiceType?.SentenceCase(), out ChoiceType choice)
                     ? choice
                     : ChoiceType.All;
+        CardCondition = cardCondition ?? "true";
+        AllowEmptySlots = allowEmptySlots ?? false; 
+    }
+
+    public ChooseSlot(ChoiceType choice, string? cardCondition, bool? allowEmptySlots)
+    {
+        Choice = choice;
         CardCondition = cardCondition ?? "true";
         AllowEmptySlots = allowEmptySlots ?? false;
     }
