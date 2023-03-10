@@ -7,23 +7,16 @@ using System.Collections;
 using UnityEngine;
 
 namespace MyriadOfJSON.Items.Actions;
+using ChoiceType = ChooseSlot.ChoiceType;
 
-public class PlaceCards : ActionBase
+public class PlaceCards : SlotChoiceActionBase 
 {
-    public const string Choose = "[choose]";
-
-    public enum BackupAction
-    {
-        DoNothing,
-        AddToHand
-    }
-
     public string? Card { get; }
     public string Slot { get; }
     public string ChoiceCondition { get; }
     public bool CanReplace { get; }
 
-    public BackupAction Backup { get; }
+    protected override ChoiceType CardChoiceType => ChoiceType.Player; 
 
     public PlaceCards(string? card, string? slot, string? choiceCondition, bool? canReplace,
             string? backupAction)
@@ -32,9 +25,9 @@ public class PlaceCards : ActionBase
         Slot = slot ?? Choose;
         ChoiceCondition = choiceCondition ?? "true";
         CanReplace = canReplace ?? false;
-        Backup = Enum.TryParse(backupAction, out BackupAction backup)
+        BackupAction = Enum.TryParse(backupAction, out BackupActionType backup)
                     ? backup
-                    : BackupAction.AddToHand;
+                    : BackupActionType.AddToHand;
     }
 
     public override IEnumerator Trigger()
@@ -62,15 +55,12 @@ public class PlaceCards : ActionBase
         yield break;
     }
 
-    private CardSlot SlotByIndex (int slotIndex)
-        => ChooseSlot.GetSlots[ChooseSlot.ChoiceType.Player]()[slotIndex - 1];
-
     private IEnumerator ChooseAndPlace()
     {
         CardInfo? card = CardHelpers.Get(Card);
         if (card == null) yield break;
         ChooseSlot chooseSlot = new(
-                    choice: ChooseSlot.ChoiceType.Player,
+                    choice: ChoiceType.Player,
                     cardCondition: ChoiceCondition,
                     allowEmptySlots: true,
                     allowFullSlots: CanReplace 
@@ -105,10 +95,10 @@ public class PlaceCards : ActionBase
 
     private IEnumerator DoBackupAction(CardInfo? card = null)
     {
-        if (Backup == BackupAction.DoNothing || card == null)
+        if (BackupAction == BackupActionType.DoNothing || card == null)
             yield break;
 
-        if (Backup == BackupAction.AddToHand)
+        if (BackupAction == BackupActionType.AddToHand)
         {
             yield return DrawCard(card);
             yield break;
