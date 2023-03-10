@@ -59,9 +59,9 @@ public class ChooseSlot
         List<CardSlot> allSlots = GetSlots[Choice]();
         List<CardSlot> validSlots = GetValidSlots();
 
-        Singleton<ViewManager>.Instance?.SwitchToView(DefaultView, false, false);
+        Singleton<ViewManager>.Instance.SwitchToView(DefaultView, false, false);
         Singleton<InteractionCursor>.Instance.InteractionDisabled = false;
-        Singleton<ViewManager>.Instance!.Controller.LockState = ViewLockState.Unlocked;
+        Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Unlocked;
 
         yield return Singleton<BoardManager>.Instance?.ChooseTarget(
                     allSlots,
