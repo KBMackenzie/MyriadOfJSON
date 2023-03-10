@@ -11,23 +11,6 @@ namespace MyriadOfJSON.Items.Actions;
 public class PlaceCards : ActionBase
 {
     public const string Choose = "[choose]";
-    public const string AllSlots = "[all]";
-
-    public class PlaceInfo 
-    {
-        public string? Card { get; }
-        public string Slot { get; }
-        public string ChoiceCondition { get; }
-        public bool CanReplace { get; }
-        
-        public PlaceInfo(string card, string? slot, string? choiceCondition, bool? canReplace)
-        {
-            Card = card;
-            Slot = slot ?? Choose;
-            ChoiceCondition = choiceCondition ?? "true";
-            CanReplace = canReplace ?? false;
-        }
-    }
 
     public enum BackupAction
     {
@@ -35,12 +18,20 @@ public class PlaceCards : ActionBase
         AddToHand
     }
 
-    public PlaceInfo[] CardsToPlace { get; }
+    public string? Card { get; }
+    public string Slot { get; }
+    public string ChoiceCondition { get; }
+    public bool CanReplace { get; }
+
     public BackupAction Backup { get; }
 
-    public PlaceCards(PlaceInfo[]? cardsToPlace, string? backupAction)
+    public PlaceCards(string? card, string? slot, string? choiceCondition, bool? canReplace,
+            string? backupAction)
     {
-        CardsToPlace = cardsToPlace ?? new PlaceInfo[0];
+        Card = card;
+        Slot = slot ?? Choose;
+        ChoiceCondition = choiceCondition ?? "true";
+        CanReplace = canReplace ?? false;
         Backup = Enum.TryParse(backupAction, out BackupAction backup)
                     ? backup
                     : BackupAction.AddToHand;
@@ -48,24 +39,21 @@ public class PlaceCards : ActionBase
 
     public override IEnumerator Trigger()
     {
-        foreach (PlaceInfo placeInfo in CardsToPlace)
+        if (Slot.ToLower() == Choose || !int.TryParse(Slot, out int slot))
         {
-            if (placeInfo.Slot.ToLower() == Choose || !int.TryParse(placeInfo.Slot, out int slot))
-            {
-                yield return ChooseAndPlace(placeInfo);
-                continue;
-            } 
-            yield return PlaceCardInSlot(placeInfo, slot);
-        }
+            yield return ChooseAndPlace();
+            yield break;
+        } 
+        yield return PlaceCardInSlot(slot);
     }
 
-    private IEnumerator PlaceCardInSlot(PlaceInfo placeInfo, int slotIndex)
+    private IEnumerator PlaceCardInSlot(int slotIndex)
     {
-        CardInfo? card = CardHelpers.Get(placeInfo.Card);
+        CardInfo? card = CardHelpers.Get(Card);
         if (card == null) yield break;
         slotIndex = Mathf.Clamp(slotIndex, 1, 4);
         CardSlot slot = SlotByIndex(slotIndex);
-        if (!placeInfo.CanReplace && slot.Card != null)
+        if (!CanReplace && slot.Card != null)
         {
             yield return DoBackupAction(card);
             yield break;
@@ -77,15 +65,15 @@ public class PlaceCards : ActionBase
     private CardSlot SlotByIndex (int slotIndex)
         => ChooseSlot.GetSlots[ChooseSlot.ChoiceType.Player]()[slotIndex - 1];
 
-    private IEnumerator ChooseAndPlace(PlaceInfo placeInfo)
+    private IEnumerator ChooseAndPlace()
     {
-        CardInfo? card = CardHelpers.Get(placeInfo.Card);
+        CardInfo? card = CardHelpers.Get(Card);
         if (card == null) yield break;
         ChooseSlot chooseSlot = new(
-                    choice:ChooseSlot.ChoiceType.Player,
-                    cardCondition:placeInfo.ChoiceCondition,
+                    choice: ChooseSlot.ChoiceType.Player,
+                    cardCondition: ChoiceCondition,
                     allowEmptySlots: true,
-                    allowFullSlots: placeInfo.CanReplace 
+                    allowFullSlots: CanReplace 
                 );
         if (!chooseSlot.HasValidSlots()) 
         {
