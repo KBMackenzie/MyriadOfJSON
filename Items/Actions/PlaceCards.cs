@@ -10,6 +10,8 @@ namespace MyriadOfJSON.Items.Actions;
 
 public class PlaceCards : ActionBase
 {
+    public const string Choose = "[choose]";
+
     public class PlaceInfo 
     {
         public string? Card { get; }
@@ -19,7 +21,7 @@ public class PlaceCards : ActionBase
         public PlaceInfo(string card, string? slot, string? choiceCondition)
         {
             Card = card;
-            Slot = slot ?? "[Choose]";
+            Slot = slot ?? Choose;
             ChoiceCondition = choiceCondition ?? "true";
         }
     }
@@ -45,7 +47,7 @@ public class PlaceCards : ActionBase
     {
         foreach (PlaceInfo placeInfo in CardsToPlace)
         {
-            if (placeInfo.Slot.ToLower() == "[choose]" || !int.TryParse(placeInfo.Slot, out int slot))
+            if (placeInfo.Slot.ToLower() == Choose || !int.TryParse(placeInfo.Slot, out int slot))
             {
                 yield return ChooseAndPlace(placeInfo);
                 continue;
