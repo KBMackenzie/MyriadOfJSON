@@ -40,7 +40,9 @@ public class ChooseSlot
 
     public ChooseSlot(string? choiceType, string? cardCondition, bool? allowEmptySlots)
     {
-        Choice = EnumHelpers.TryParse(choiceType, out ChoiceType choice) ? choice : ChoiceType.All;
+        Choice = EnumHelpers.TryParse(choiceType?.SentenceCase(), out ChoiceType choice)
+                    ? choice
+                    : ChoiceType.All;
         CardCondition = cardCondition ?? "true";
         AllowEmptySlots = allowEmptySlots ?? false;
     }
@@ -75,16 +77,16 @@ public class ChooseSlot
         yield break;
     }
 
-    public void CardAction(Action<CardSlot> action)
+    public void CardAction(Action<CardSlot> fn)
     {
         if (Target == null) return;
         Singleton<ViewManager>.Instance.Controller.LockState = ViewLockState.Locked;
         Singleton<InteractionCursor>.Instance.InteractionDisabled = true;
-        action(Target);
+        fn(Target);
     }
 
     public void End()
     {
-        Singleton<ViewManager>.Instance!.Controller.LockState = ViewLockState.Unlocked;
+        Singleton<ViewManager>.Instance?.Controller.LockState = ViewLockState.Unlocked;
     }
 }
