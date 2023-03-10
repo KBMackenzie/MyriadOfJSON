@@ -11,18 +11,21 @@ namespace MyriadOfJSON.Items.Actions;
 public class PlaceCards : ActionBase
 {
     public const string Choose = "[choose]";
+    public const string AllSlots = "[all]";
 
     public class PlaceInfo 
     {
         public string? Card { get; }
         public string Slot { get; }
         public string ChoiceCondition { get; }
+        public bool CanReplace { get; }
         
-        public PlaceInfo(string card, string? slot, string? choiceCondition)
+        public PlaceInfo(string card, string? slot, string? choiceCondition, bool? canReplace)
         {
             Card = card;
             Slot = slot ?? Choose;
             ChoiceCondition = choiceCondition ?? "true";
+            CanReplace = canReplace ?? false;
         }
     }
 
@@ -51,27 +54,38 @@ public class PlaceCards : ActionBase
             {
                 yield return ChooseAndPlace(placeInfo);
                 continue;
-            }
-            
+            } 
+            yield return PlaceCardInSlot(placeInfo, slot);
         }
     }
 
     private IEnumerator PlaceCardInSlot(PlaceInfo placeInfo, int slotIndex)
     {
+        CardInfo? card = CardHelpers.Get(placeInfo.Card);
+        if (card == null) yield break;
         slotIndex = Mathf.Clamp(slotIndex, 1, 4);
-        CardSlot slot = ChooseSlot.GetSlots[ChooseSlot.ChoiceType.Player]()[slotIndex];
-        // TODO: place card in board
+        CardSlot slot = SlotByIndex(slotIndex);
+        if (!placeInfo.CanReplace && slot.Card != null)
+        {
+            yield return DoBackupAction(card);
+            yield break;
+        }
+        yield return Place(card, slot);
         yield break;
     }
+
+    private CardSlot SlotByIndex (int slotIndex)
+        => ChooseSlot.GetSlots[ChooseSlot.ChoiceType.Player]()[slotIndex - 1];
 
     private IEnumerator ChooseAndPlace(PlaceInfo placeInfo)
     {
         CardInfo? card = CardHelpers.Get(placeInfo.Card);
         if (card == null) yield break;
         ChooseSlot chooseSlot = new(
-                    ChooseSlot.ChoiceType.Player,
-                    placeInfo.ChoiceCondition,
-                    true        
+                    choice:ChooseSlot.ChoiceType.Player,
+                    cardCondition:placeInfo.ChoiceCondition,
+                    allowEmptySlots: true,
+                    allowFullSlots: placeInfo.CanReplace 
                 );
         if (!chooseSlot.HasValidSlots()) 
         {
@@ -79,8 +93,26 @@ public class PlaceCards : ActionBase
             yield break;
         };
         yield return chooseSlot.Choose();
-        // TODO: place card in board
+        if (chooseSlot.Target == null)
+        {
+            yield return DoBackupAction(card);
+            yield break;
+        }
+        yield return Place(card, chooseSlot.Target);
         yield break;
+    }
+
+    private IEnumerator Place(CardInfo card, CardSlot slot)
+    {
+        if (slot.Card != null)
+            yield return slot.Card.Die(false);
+
+        yield return Singleton<BoardManager>.Instance.CreateCardInSlot(
+                    info: card,
+                    slot: slot,
+                    transitionLength: 0.15f,
+                    resolveTriggers: true
+                );
     }
 
     private IEnumerator DoBackupAction(CardInfo? card = null)

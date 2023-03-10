@@ -5,6 +5,7 @@ using MyriadOfJSON.Helpers;
 using DiskCardGame;
 using InscryptionAPI.Card;
 using MyriadOfJSON.Parser.Names;
+using System.Text.RegularExpressions;
 
 namespace MyriadOfJSON.Parser.Functions;
 using CardAction = System.Action<DiskCardGame.PlayableCard, string>;
@@ -15,7 +16,7 @@ public static class CardActions
     {
         FunctionNames.AddAbility,
         FunctionNames.AttackMod,
-        FunctionNames.HealthMod
+        FunctionNames.HealthMod,
         // TODO
     };
 
@@ -23,7 +24,7 @@ public static class CardActions
     {
         { FunctionNames.AddAbility.ToLower(), AddAbility },
         { FunctionNames.AttackMod.ToLower(), AttackMod },
-        { FunctionNames.HealthMod.ToLower(), HealthMod } 
+        { FunctionNames.HealthMod.ToLower(), HealthMod },
         // TODO
     };
 
@@ -54,5 +55,37 @@ public static class CardActions
         CardModificationInfo mod = new();
         mod.healthAdjustment += healthModifier;
         card.AddTemporaryMod(mod);
+    }
+
+
+    /* MOVE LOGIC */
+    /* [<>]n
+     * Where < is left and > is right, and 'n' is the amount of slots to move.
+     * The card will move as much as it can until it hits a full slot.
+     * <2 -- Move twice to the left. >2 -- Move twice to the right. */
+    public class MoveInfo
+    {
+        public static Regex MoveRegex = new(@"^[<>]\d$");
+
+        public bool IsLeft { get; }
+        public int Amount { get; }
+
+        public MoveInfo(bool isLeft, int amount)
+        {
+            IsLeft = isLeft;
+            Amount = amount;
+        }
+    }
+
+    private static MoveInfo? ParseDirection(string direction)
+    {
+        if (!MoveInfo.MoveRegex.IsMatch(direction))
+        {
+            Plugin.LogError($"Invalid move expression: {direction}");
+            return null;
+        }
+        bool isLeft = direction[0] == '<';
+        int amount = int.TryParse(direction[1].ToString(), out int x) ? x : 0;
+        return new (isLeft, amount);
     }
 }

@@ -21,8 +21,10 @@ public class ChooseSlot
     }
 
     public ChoiceType Choice { get; }
-    public bool AllowEmptySlots { get; }
     public string CardCondition { get; }
+    public bool AllowEmptySlots { get; }
+    public bool AllowFullSlots { get; }
+
     public CardSlot? Target { get; private set; }
     private readonly View DefaultView = View.Board;
 
@@ -39,26 +41,28 @@ public class ChooseSlot
     public bool HasValidSlots()
         => GetValidSlots().Count > 0;
 
-    public ChooseSlot(string? choiceType, string? cardCondition, bool? allowEmptySlots)
+    public ChooseSlot(string? choiceType, string? cardCondition, bool? allowEmptySlots, bool? allowFullSlots)
     {
         Choice = Enum.TryParse(choiceType?.SentenceCase(), out ChoiceType choice)
                     ? choice
                     : ChoiceType.All;
         CardCondition = cardCondition ?? "true";
         AllowEmptySlots = allowEmptySlots ?? false; 
+        AllowFullSlots = allowFullSlots ?? false;
     }
 
-    public ChooseSlot(ChoiceType choice, string? cardCondition, bool? allowEmptySlots)
+    public ChooseSlot(ChoiceType choice, string? cardCondition, bool? allowEmptySlots, bool? allowFullSlots)
     {
         Choice = choice;
         CardCondition = cardCondition ?? "true";
         AllowEmptySlots = allowEmptySlots ?? false;
+        AllowFullSlots = allowFullSlots ?? false;
     }
 
     public bool Predicate(CardSlot slot)
     {
-        if (!AllowEmptySlots && slot?.Card == null)
-            return false;
+        if (slot.Card == null) return AllowEmptySlots;
+        if (!AllowFullSlots) return false;
 
         Expression? exp = ExpressionHandler.CardPredicate(CardCondition, slot.Card.Info);
         return ExpressionHandler.SafeEvaluation(exp);
