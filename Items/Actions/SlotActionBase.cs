@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using DiskCardGame;
 
 namespace MyriadOfJSON.Items.Actions;
@@ -5,8 +6,10 @@ using ChoiceType = ChooseSlot.ChoiceType;
 
 public abstract class SlotActionBase : ActionBase
 {
-    public const string Choose = "[choose]";
-    public const string AllSlots = "[all]";
+    public readonly Regex ChoiceRegex = new(
+                pattern: @"^\[?choose\]?$",
+                options: RegexOptions.IgnoreCase
+            ); 
 
     public enum BackupActionType
     {
@@ -17,6 +20,6 @@ public abstract class SlotActionBase : ActionBase
     protected abstract ChoiceType CardChoiceType { get; }
     protected BackupActionType BackupAction { get; set; } 
 
-    protected CardSlot SlotByIndex (int slotIndex)
-        => ChooseSlot.GetSlots[CardChoiceType]()[slotIndex - 1];
+    protected CardSlot? SlotByIndex (int slotIndex)
+        => ChooseSlot.GetSlots[CardChoiceType]().SafelyGet(slotIndex);
 }

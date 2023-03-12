@@ -1,6 +1,8 @@
+using MyriadOfJSON.Items.Actions;
+
 namespace MyriadOfJSON.Items.Data;
 
-public abstract class SortableActionData<T> 
+public abstract class SortableActionData<T> where T : ActionBase
 {
     public int orderIndex { get; set; }
     public int tiebreaker { get; set; }

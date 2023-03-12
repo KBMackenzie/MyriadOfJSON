@@ -5,6 +5,7 @@ using MyriadOfJSON.Helpers;
 using DiskCardGame;
 using System.Collections;
 using UnityEngine;
+using MyriadOfJSON.Items.Data;
 
 namespace MyriadOfJSON.Items.Actions;
 using ChoiceType = ChooseSlot.ChoiceType;
@@ -18,25 +19,31 @@ public class PlaceCards : SlotActionBase
 
     protected override ChoiceType CardChoiceType => ChoiceType.Player; 
 
-    public PlaceCards(string? card, string? slot, string? choiceCondition, bool? canReplace,
-            string? backupAction)
+    public PlaceCards(PlaceCardsData data)
     {
-        Card = card;
-        Slot = slot ?? Choose;
-        ChoiceCondition = choiceCondition ?? "true";
-        CanReplace = canReplace ?? false;
-        BackupAction = Enum.TryParse(backupAction, out BackupActionType backup)
-                    ? backup
-                    : BackupActionType.AddToHand;
+        Card = data.card;
+        Slot = data.slot ?? "choose";
+        ChoiceCondition = data.choiceCondition ?? "true";
+        CanReplace = data.canReplace ?? false;
+        BackupAction = Enum.TryParse(data.backupAction, out BackupActionType backup)
+                        ? backup
+                        : BackupActionType.AddToHand;
     }
 
     public override IEnumerator Trigger()
     {
-        if (Slot.ToLower() == Choose || !int.TryParse(Slot, out int slot))
+        if (ChoiceRegex.IsMatch(Slot)) 
         {
             yield return ChooseAndPlace();
             yield break;
         } 
+        
+        if (!int.TryParse(Slot, out int slot))
+        {
+            Plugin.LogError($"Invalid slot number: {Slot ?? "(null)"}");
+            yield break;
+        }
+
         yield return PlaceCardInSlot(slot);
     }
 
@@ -45,8 +52,8 @@ public class PlaceCards : SlotActionBase
         CardInfo? card = CardHelpers.Get(Card);
         if (card == null) yield break;
         slotIndex = Mathf.Clamp(slotIndex, 1, 4);
-        CardSlot slot = SlotByIndex(slotIndex);
-        if (!CanReplace && slot.Card != null)
+        CardSlot? slot = SlotByIndex(slotIndex);
+        if (slot == null || (!CanReplace && slot.Card != null))
         {
             yield return DoBackupAction(card);
             yield break;
