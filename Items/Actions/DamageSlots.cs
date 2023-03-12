@@ -14,8 +14,6 @@ using ChoiceType = ChooseSlot.ChoiceType;
 
 public class DamageSlots : SlotActionBase 
 {
-    protected override ChoiceType CardChoiceType => ChoiceType.All;
-
     public string[] Slots { get; }
     public string CardCondition { get; }
     public string AmountExpression { get; }
@@ -25,9 +23,12 @@ public class DamageSlots : SlotActionBase
         Slots = data.slots ?? new string[0];
         CardCondition = data.cardCondition ?? "true";
         AmountExpression = data.amountExpression ?? "0";
-        BackupAction = Enum.TryParse(data.backupAction, out BackupActionType backup)
-                        ? backup
-                        : BackupActionType.AddToHand;
+
+        /*BackupAction = data.ParseBackupAction(
+                    defaultAction: BackupActionType.DoNothing);*/
+
+        CardChoiceType = data.ParseChoiceType(
+                    defaultChoice: ChoiceType.All);
     }
 
     public override IEnumerator Trigger()
@@ -38,14 +39,6 @@ public class DamageSlots : SlotActionBase
                 ? ParseAsSlot(slot)
                 : ChooseAndDamage();
         }
-    }
-
-    private CardSlot? ParseAsSlot(string? indexStr)
-    {
-        if (!int.TryParse(indexStr, out int amount))
-            return null;
-
-        return SlotByIndex(Mathf.Clamp(amount, 1, 8) - 1); 
     }
 
     private int EvaluateAmount(CardInfo card)
@@ -70,7 +63,7 @@ public class DamageSlots : SlotActionBase
     private IEnumerator ChooseAndDamage()
     {
         ChooseSlot chooseSlot = new(
-                    choice: ChoiceType.Player,
+                    choice: CardChoiceType,
                     cardCondition: CardCondition, 
                     allowEmptySlots: false,
                     allowFullSlots: true 

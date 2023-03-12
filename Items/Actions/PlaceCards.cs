@@ -17,17 +17,18 @@ public class PlaceCards : SlotActionBase
     public string ChoiceCondition { get; }
     public bool CanReplace { get; }
 
-    protected override ChoiceType CardChoiceType => ChoiceType.Player; 
-
     public PlaceCards(PlaceCardsData data)
     {
         Card = data.card;
         Slot = data.slot ?? "choose";
         ChoiceCondition = data.choiceCondition ?? "true";
         CanReplace = data.canReplace ?? false;
-        BackupAction = Enum.TryParse(data.backupAction, out BackupActionType backup)
-                        ? backup
-                        : BackupActionType.AddToHand;
+
+        BackupAction = data.ParseBackupAction(
+                    defaultAction: BackupActionType.AddToHand); 
+
+        CardChoiceType = data.ParseChoiceType(
+                    defaultChoice: ChoiceType.Player);
     }
 
     public override IEnumerator Trigger()
@@ -38,21 +39,14 @@ public class PlaceCards : SlotActionBase
             yield break;
         } 
         
-        if (!int.TryParse(Slot, out int slot))
-        {
-            Plugin.LogError($"Invalid slot number: {Slot ?? "(null)"}");
-            yield break;
-        }
-
+        CardSlot? slot = ParseAsSlot(Slot); 
         yield return PlaceCardInSlot(slot);
     }
 
-    private IEnumerator PlaceCardInSlot(int slotIndex)
+    private IEnumerator PlaceCardInSlot(CardSlot? slot)
     {
         CardInfo? card = CardHelpers.Get(Card);
         if (card == null) yield break;
-        slotIndex = Mathf.Clamp(slotIndex, 1, 4);
-        CardSlot? slot = SlotByIndex(slotIndex);
         if (slot == null || (!CanReplace && slot.Card != null))
         {
             yield return DoBackupAction(card);
@@ -67,7 +61,7 @@ public class PlaceCards : SlotActionBase
         CardInfo? card = CardHelpers.Get(Card);
         if (card == null) yield break;
         ChooseSlot chooseSlot = new(
-                    choice: ChoiceType.Player,
+                    choice: CardChoiceType, 
                     cardCondition: ChoiceCondition,
                     allowEmptySlots: true,
                     allowFullSlots: CanReplace 

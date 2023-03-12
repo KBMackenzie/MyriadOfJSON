@@ -11,7 +11,7 @@ public abstract class ActionBase : IComparable<ActionBase>
     public int Tiebreaker { get; private set; }
 
     /* set order! should always be used in constructor! */
-    public void SetOrder<T>(SortableActionData<T> data)
+    public void SetOrder<T>(SortableActionData<T> data) where T : ActionBase
     {
         OrderIndex = data.orderIndex;
         Tiebreaker = data.tiebreaker;
