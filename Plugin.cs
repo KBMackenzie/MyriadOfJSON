@@ -22,7 +22,7 @@ public class Plugin : BaseUnityPlugin
     internal static Plugin? Instance;
     
     /* configs! c: */
-    internal static ConfigEntry<bool>? Debug;
+    // internal static ConfigEntry<bool>? Debug;
 
     private void Awake()
     {
