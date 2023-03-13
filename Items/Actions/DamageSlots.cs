@@ -29,6 +29,7 @@ public class DamageSlots : SlotActionBase
 
         CardChoiceType = data.ParseChoiceType(
                     defaultChoice: ChoiceType.All);
+        SetOrder(data);
     }
 
     public override IEnumerator Trigger()

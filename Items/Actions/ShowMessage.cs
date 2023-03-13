@@ -25,6 +25,7 @@ public class ShowMessage : ActionBase
         Emotion = Enum.TryParse(data.emotion, out Emotion e) ? e : Emotion.Neutral;
         LetterAnimation = Enum.TryParse(data.letterAnimation, out LetterAnimation l) ? l : default;
         WaitForInput = data.waitForInput ?? false;
+        SetOrder(data);
     }
 
     public override IEnumerator Trigger()

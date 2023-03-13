@@ -29,6 +29,7 @@ public class PlaceCards : SlotActionBase
 
         CardChoiceType = data.ParseChoiceType(
                     defaultChoice: ChoiceType.Player);
+        SetOrder(data);
     }
 
     public override IEnumerator Trigger()

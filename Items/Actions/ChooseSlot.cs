@@ -49,6 +49,7 @@ public class ChooseSlot
         CardCondition = cardCondition ?? "true";
         AllowEmptySlots = allowEmptySlots ?? false; 
         AllowFullSlots = allowFullSlots ?? false;
+        // SetOrder(data);
     }
 
     public ChooseSlot(ChoiceType choice, string? cardCondition, bool? allowEmptySlots, bool? allowFullSlots)

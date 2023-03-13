@@ -61,7 +61,7 @@ public class ManageResources : ActionBase
 
     private IEnumerator ManageMaxEnergy(int amount)
     {
-        yield return Singleton<ResourcesManager>.Instance.AddMaxEnergy(Mathf.Abs(amount));
+        yield return Singleton<ResourcesManager>.Instance?.AddMaxEnergy(Mathf.Abs(amount));
     }
 
     private IEnumerator ManageCurrency(int amount)
