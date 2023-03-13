@@ -3,6 +3,7 @@ using MyriadOfJSON.Helpers;
 using InscryptionAPI.Items;
 using DiskCardGame;
 using InscryptionAPI.Items.Extensions;
+using UnityEngine;
 
 namespace MyriadOfJSON.Items.Data;
 using ModelType = ConsumableItemManager.ModelType;
@@ -19,7 +20,7 @@ public class ItemData
     public bool? notRandomlyGiven { get; set; }
 
     public string? modelType { get; set; }
-    public bool hasCustomModel { get; set; }
+    public bool? hasCustomModel { get; set; }
     public CustomModelData? customModelData { get; set; }
 
     /* fun ncalc! c: */
@@ -36,24 +37,44 @@ public class ItemData
     internal string InternalName()
         => $"{GuidAndPrefix()}_{GetName()}";
 
-    internal ModelType GetModelType()
-    {
-        if (customModelData != null)
-            return customModelData.MakeModel();
+    internal ModelType ParseAsModel()
+        => Enum.TryParse(modelType?.SentenceCase(), out ModelType type)
+        ? type
+        : ModelType.BasicRune; 
 
-        return Enum.TryParse(modelType?.SentenceCase(), out ModelType mt)
-                ? mt
-                : ModelType.BasicRune; 
-    }
+    internal GameObject? GetCustomModel()
+        => customModelData?.GetModel(GuidAndPrefix(), GetName()); 
+
+    internal bool HasCustomModel()
+        => (hasCustomModel ?? false)
+        && customModelData != null
+        && GetCustomModel() != null;
 
     internal ConsumableItemData CreateItem()
+        => !HasCustomModel()
+        ? CreateItemWithABasicModel()
+        : CreateItemWithACustomModel();
+
+    private ConsumableItemData CreateItemWithABasicModel()
         => ConsumableItemManager.New(
                 GuidAndPrefix(),
                 GetName(),
                 description ?? string.Empty,
                 AssetHelpers.MakeTexture(rulebookTexture),
                 typeof(DummyItem),
-                GetModelType() 
+                ParseAsModel() 
+                ).SetPowerLevel(powerLevel ?? 0)
+        .SetNotRandomlyGiven(notRandomlyGiven ?? false)
+        .SetAct1();
+
+    private ConsumableItemData CreateItemWithACustomModel()
+        => ConsumableItemManager.New(
+                GuidAndPrefix(),
+                GetName(),
+                description ?? string.Empty,
+                AssetHelpers.MakeTexture(rulebookTexture),
+                typeof(DummyItem),
+                GetCustomModel() 
             ).SetPowerLevel(powerLevel ?? 0)
             .SetNotRandomlyGiven(notRandomlyGiven ?? false)
             .SetAct1();

@@ -1,3 +1,4 @@
+using MyriadOfJSON.Helpers;
 using InscryptionAPI.Items;
 using UnityEngine;
 
@@ -9,16 +10,22 @@ public class CustomModelData
     public string? assetBundle { get; set; }
     public string? gameObjectName { get; set; }
 
-    private static ModelType DefaultModelType
-        => ModelType.BasicRune;
+    private GameObject? ModelCache { get; set; }
     
-    public ModelType MakeModel()
+    public GameObject? GetModel(string guid, string name)
     {
         if (assetBundle == null || gameObjectName == null)
-            return DefaultModelType;
+            return null;
 
-        AssetBundle ab = AssetBundle.LoadFromFile(assetBundle);
-        // TODO
-        return DefaultModelType;
+        if (ModelCache != null) return ModelCache;
+
+        if (BundleHelpers.TryLoadAssetBundle(assetBundle, out AssetBundle bundle)
+                && bundle.TryLoadAsset(gameObjectName, out GameObject obj))
+        {
+            ModelCache = obj;
+            return obj;
+        }
+
+        return null;
     }
 }
