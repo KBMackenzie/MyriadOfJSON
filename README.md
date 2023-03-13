@@ -1,1 +1,3 @@
-# MiscellaneousJSON
+# MyriadOfJSON
+
+TODO: readme + documentation
