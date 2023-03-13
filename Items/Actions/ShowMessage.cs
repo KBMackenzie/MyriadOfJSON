@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using DiskCardGame;
 using MyriadOfJSON.Items.Data;
+using DiskCardGame;
 
 namespace MyriadOfJSON.Items.Actions;
 using LetterAnimation = DiskCardGame.TextDisplayer.LetterAnimation;

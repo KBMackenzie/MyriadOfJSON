@@ -2,7 +2,6 @@
 using NCalc;
 using MyriadOfJSON.Helpers;
 using MyriadOfJSON.Parser.Functions;
-using MyriadOfJSON.Parser.Names;
 using MyriadOfJSON.Parser.Variables;
 using DiskCardGame;
 
