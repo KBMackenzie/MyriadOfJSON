@@ -6,6 +6,7 @@ using DiskCardGame;
 using MyriadOfJSON.Helpers;
 using MyriadOfJSON.Parser;
 using MyriadOfJSON.Items.Data;
+using MyriadOfJSON.Parser.Variables;
 using UnityEngine;
 using NCalc;
 
@@ -45,18 +46,26 @@ public class ManageResources : ActionBase
 
     private IEnumerator ManageBones(int amount)
     {
+        Plugin.LogInfo($"Bone amount: {VariableUtils.BoneAmount()}");
         if (amount > 0)
             yield return Singleton<ResourcesManager>.Instance?.AddBones(amount);
-        else
-            yield return Singleton<ResourcesManager>.Instance?.SpendBones(Mathf.Abs(amount)); 
+        else if (amount < 0)
+        {
+            int takeAmount = Mathf.Min(Mathf.Abs(amount), VariableUtils.BoneAmount()); 
+            Plugin.LogInfo($"Take amount: {takeAmount}");
+            yield return Singleton<ResourcesManager>.Instance?.SpendBones(takeAmount);
+        }
     }
 
     private IEnumerator ManageEnergy(int amount)
     {
         if (amount > 0)
             yield return Singleton<ResourcesManager>.Instance?.AddEnergy(amount);
-        else
-            yield return Singleton<ResourcesManager>.Instance?.SpendEnergy(Mathf.Abs(amount));
+        else if (amount < 0)
+        { 
+            int takeAmount = Mathf.Min(Mathf.Abs(amount), VariableUtils.EnergyAmount()); 
+            yield return Singleton<ResourcesManager>.Instance?.SpendEnergy(takeAmount);
+        }
     }
 
     private IEnumerator ManageMaxEnergy(int amount)
@@ -69,8 +78,11 @@ public class ManageResources : ActionBase
         RunState.Run.currency += amount;
         if (amount > 0)
             yield return Singleton<CurrencyBowl>.Instance?.DropWeightsIn(amount);
-        else
-            yield return Singleton<CurrencyBowl>.Instance?.TakeWeights(Mathf.Abs(amount));
+        else if (amount < 0)
+        {
+            int takeAmount = Mathf.Min(Mathf.Abs(amount), VariableUtils.FoilAmount()); 
+            yield return Singleton<CurrencyBowl>.Instance?.TakeWeights(takeAmount);
+        }
         yield return new WaitForSeconds(0.2f);
     }
 

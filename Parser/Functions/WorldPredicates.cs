@@ -38,7 +38,7 @@ public static class WorldPredicates
         => Singleton<PlayerHand>.Instance?.CardsInHand?.Any(x => x.Info.name == cardName) ?? false;
 
     public static NCalcBool HasCardInDeck (string cardName)
-        => SaveManager.SaveFile.CurrentDeck?.Cards?.Any(x => x.name == cardName) ?? false;
+        => RunState.DeckList?.Any(x => x.name == cardName) ?? false;
 
     public static NCalcBool IsCardOnBoard (string cardName)
         => Singleton<BoardManager>.Instance?.CardsOnBoard?.Any(x => x.Info.name == cardName) ?? false;

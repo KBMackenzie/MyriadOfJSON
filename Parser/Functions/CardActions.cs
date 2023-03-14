@@ -29,7 +29,13 @@ public static class CardActions
     };
 
     public static void AddAbility(PlayableCard card, string abilityParam)
-        => card.AddTemporaryMod(new (CardData.GetAbility(abilityParam))); 
+    {
+        CardModificationInfo mod = new(CardData.GetAbility(abilityParam));
+        mod.fromCardMerge = true;
+        card.Info.Mods.Add(mod);
+        // card.AddTemporaryMod(mod); 
+        card.RenderCard();
+    } 
     
     public static void AttackMod(PlayableCard card, string attackParam)
     {

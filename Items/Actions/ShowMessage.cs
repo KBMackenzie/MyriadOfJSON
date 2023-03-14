@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using MyriadOfJSON.Helpers;
 using MyriadOfJSON.Items.Data;
 using DiskCardGame;
 
@@ -20,8 +21,10 @@ public class ShowMessage : ActionBase
     {
         Message = data.message ?? string.Empty;
         Duration = data.duration ?? 2f;
-        Emotion = Enum.TryParse(data.emotion, out Emotion e) ? e : Emotion.Neutral;
-        LetterAnimation = Enum.TryParse(data.letterAnimation, out LetterAnimation l) ? l : default;
+        Emotion = Enum.TryParse(data.emotion?.SentenceCase(), out Emotion e)
+            ? e : Emotion.Neutral;
+        LetterAnimation = Enum.TryParse(data.letterAnimation?.SentenceCase(), out LetterAnimation l)
+            ? l : default;
         WaitForInput = data.waitForInput ?? false;
         SetOrder(data);
     }

@@ -16,13 +16,21 @@ public static class LoadItems
     
     internal static void LoadJSON(string filePath)
     {
-        ItemData? data = JsonConvert.DeserializeObject<ItemData>(File.ReadAllText(filePath));
-        if(data == null)
+        ItemJSONData? data;
+        try
+        {
+             data = JsonConvert.DeserializeObject<ItemJSONData>(File.ReadAllText(filePath));
+        }
+        catch (JsonException ex)
         {
             Plugin.LogError($"Couldn't load JSON data from file \'{Path.GetFileName(filePath)}\'!");
+            Plugin.LogError(ex.Message);
             return;
         }
+        if (data == null) return;
         data.CreateItem();
         data.RegisterActions();
+        Plugin.LogInfo($"Loaded new item from file '{Path.GetFileName(filePath)}'!");
+ 
     }
 }

@@ -10,6 +10,10 @@ public class ActionListData
     public ScaleBalanceData[]? scaleBalance { get; set; }
     public ManageResourcesData[]? manageResources { get; set; }
     public DrawCardFromPoolData[]? drawCardsFromPool { get; set; }
+    public DamageSlotsData[]? damageSlots { get; set; }
+    public PlaceCardData[]? placeCard { get; set; }
+    public SlotEffectData[]? slotEffect { get; set; }
+    public ShowMessageData[]? showMessage { get; set; }
 
     private IEnumerable<T>? CreateAll<T>(SortableActionData<T>[]? arr) where T : ActionBase
     {
@@ -34,6 +38,10 @@ public class ActionListData
         actions.AddRange(CreateAll(scaleBalance));
         actions.AddRange(CreateAll(manageResources));
         actions.AddRange(CreateAll(drawCardsFromPool));
+        actions.AddRange(CreateAll(damageSlots));
+        actions.AddRange(CreateAll(placeCard));
+        actions.AddRange(CreateAll(slotEffect));
+        actions.AddRange(CreateAll(showMessage));
 
         /* sort with icomparable! yay! c: */
         actions.Sort();

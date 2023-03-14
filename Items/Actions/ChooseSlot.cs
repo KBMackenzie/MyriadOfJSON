@@ -49,7 +49,6 @@ public class ChooseSlot
         CardCondition = cardCondition ?? "true";
         AllowEmptySlots = allowEmptySlots ?? false; 
         AllowFullSlots = allowFullSlots ?? false;
-        // SetOrder(data);
     }
 
     public ChooseSlot(ChoiceType choice, string? cardCondition, bool? allowEmptySlots, bool? allowFullSlots)
@@ -84,11 +83,18 @@ public class ChooseSlot
                     (x) => Target = x,
                     onInvalidTarget,
                     null,
-                    () => Singleton<ViewManager>.Instance.CurrentView != DefaultView,
+                    null,
                     CursorType.Point
                 );
         yield break;
     }
+
+    /* Adding this as the 5th argument for Singleton<BoardManager>.Instance?.ChooseTarget() ...
+     * () => Singleton<ViewManager>.Instance.CurrentView != DefaultView,
+     * ... would allow for 'cancelling' the choice process by looking away from the board.
+     * I feel it's not really necessary with JSON items right now. ><;; 
+     * It would take a lot to implement. Not worth it. I just gotta make sure there are
+     * no 'locks' when choosing slots and being able to cancel the action. */
 
     public void CardAction(Action<CardSlot> fn)
     {

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MyriadOfJSON.Items.Data;
 using ModelType = ConsumableItemManager.ModelType;
 
-public class ItemData
+public class ItemJSONData
 {
     public string? prefix { get; set; }
     

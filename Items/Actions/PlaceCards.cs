@@ -7,14 +7,14 @@ using UnityEngine;
 namespace MyriadOfJSON.Items.Actions;
 using ChoiceType = ChooseSlot.ChoiceType;
 
-public class PlaceCards : SlotActionBase 
+public class PlaceCard : SlotActionBase 
 {
     public string? Card { get; }
     public string Slot { get; }
     public string ChoiceCondition { get; }
     public bool CanReplace { get; }
 
-    public PlaceCards(PlaceCardsData data)
+    public PlaceCard(PlaceCardData data)
     {
         Card = data.card;
         Slot = data.slot ?? "choose";
@@ -22,7 +22,7 @@ public class PlaceCards : SlotActionBase
         CanReplace = data.canReplace ?? false;
 
         BackupAction = data.ParseBackupAction(
-                    defaultAction: BackupActionType.AddToHand); 
+                    defaultAction: BackupActionType.DoNothing); 
 
         CardChoiceType = data.ParseChoiceType(
                     defaultChoice: ChoiceType.Player);
@@ -92,6 +92,8 @@ public class PlaceCards : SlotActionBase
                 );
     }
 
+    /* Backup actions are not currently necessary; they're backups.
+     * In the best case scenario, this ISN'T called. */
     private IEnumerator DoBackupAction(CardInfo? card = null)
     {
         if (BackupAction == BackupActionType.DoNothing || card == null)

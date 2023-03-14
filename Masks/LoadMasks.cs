@@ -24,20 +24,26 @@ internal static class LoadMasks
 
     internal static void LoadJSON(string file)
     {
-        MaskData? mask = JsonConvert.DeserializeObject<MaskData>(File.ReadAllText(file));
-        if (mask == null)
+
+        MaskData? data; 
+        try
+        {
+            data = JsonConvert.DeserializeObject<MaskData>(File.ReadAllText(file));
+        }
+        catch (JsonException ex)
         {
             Plugin.LogError($"Couldn't load JSON data from \'{Path.GetFileName(file)}\'!"); 
+            Plugin.LogError(ex.Message);
             return;
         }
-
-        mask.overrideMask = mask.overrideMask?.SentenceCase(); // Format override name
-        if (!ValidOverride(mask)) 
+        if (data == null) return;
+        data.overrideMask = data.overrideMask?.SentenceCase(); // Format override name
+        if (!ValidOverride(data)) 
         {
-            Plugin.LogError($"Invalid mask override name: {mask.overrideMask ?? "(null)"}");
+            Plugin.LogError($"Invalid mask override name: {data.overrideMask ?? "(null)"}");
             return;
         }
 
-        mask.MakeMask();
+        data.MakeMask();
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using DiskCardGame;
 using MyriadOfJSON.Items.Data;
+using MyriadOfJSON.Parser;
 using NCalc;
 
 namespace MyriadOfJSON.Items.Actions;
@@ -31,14 +32,14 @@ public class DamageSlots : SlotActionBase
         foreach (string slot in Slots)
         {
             yield return !ChoiceRegex.IsMatch(slot)
-                ? ParseAsSlot(slot)
+                ? ParseAndDamage(slot)
                 : ChooseAndDamage();
         }
     }
 
     private int EvaluateAmount(CardInfo card)
     {
-        Expression? exp = ExpressionHandler.CardPredicate(CardCondition, card);
+        Expression? exp = ExpressionHandler.CardPredicate(AmountExpression, card);
         return ExpressionHandler.SafelyParseAsInt(exp) ?? 0;
     }
 
